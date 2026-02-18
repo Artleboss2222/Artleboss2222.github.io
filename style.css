@@ -320,11 +320,6 @@ h1, h2, h3, .logo {
     z-index: 2;
 }
 
-.review-spotlight {
-    padding: 10rem 5%;
-    text-align: center;
-    background: #080808;
-}
 
 .stars {
     color: var(--accent-gold);

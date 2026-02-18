@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             nav.classList.remove('nav-scrolled');
         }
     });
-
+    
     gsap.utils.toArray('.animate-card').forEach(card => {
         gsap.fromTo(card, 
             { scale: 0.8, opacity: 0, y: 50 },
