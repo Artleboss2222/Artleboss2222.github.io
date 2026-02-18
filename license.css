@@ -1,5 +1,5 @@
 html{
-    background-color: black;
+    background: radial-gradient(circle at 50% 50%, #111111 0%, #050505 100%);
 }
 body{
     font-family: 'Inter', sans-serif;
@@ -17,5 +17,4 @@ body{
     justify-content: center;
     text-align: center;
     padding: 0 5%;
-    background: radial-gradient(circle at 50% 50%, #111111 0%, #050505 100%);
 }
