@@ -1,30 +1,18 @@
-/**
- * script.js - Logique Complète Plomberie St-Mars
- * Inclut: Lenis Scroll, Animations GSAP, Effet Magnétique, Carrousel Infini
- */
-
 gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Initialisation du Smooth Scroll (Lenis)
-    const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        direction: 'vertical',
-        smooth: true
-    });
-
+    // Smooth Scroll
+    const lenis = new Lenis();
     function raf(time) {
         lenis.raf(time);
         requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
 
-    // 2. Mise à jour automatique de l'année
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 3. Données des Avis Clients (Injectées)
+    // --- Données des Avis Clients ---
     const reviewsData = [
         { name: "Sanie Varela", date: "il y a 2 mois", text: "Compétences et ponctualité, avec des prix justes! Recommandé à 100%", badges: ["5 avis"] },
         { name: "Fabio Mikio", date: "il y a 11 mois", text: "Very friendly and very professional 👏 Will be doing my future plumbing needs with them 100%", badges: ["Local Guide"] },
@@ -34,67 +22,78 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Ali Reza", date: "il y a 8 ans", text: "Martin connaît très bien son métier et propose la solution la plus économique.", badges: ["38 avis"] }
     ];
 
-    // 4. Logique du Carrousel Infini
+    // --- Initialisation Carrousel ---
     const track = document.getElementById('reviews-track');
     
-    if (track) {
-        // Fonction pour créer une carte HTML
-        const createCard = (review) => {
-            const card = document.createElement('div');
-            card.className = 'review-card';
-            const badges = review.badges.map(b => `<span>${b}</span>`).join('');
-            card.innerHTML = `
-                <div class="reviewer-meta">
-                    <div class="reviewer-info">
-                        <h4>${review.name}</h4>
-                        <div class="badges">${badges}</div>
-                    </div>
-                    <div class="stars">★★★★★</div>
+    // Fonction pour créer une carte
+    const createCard = (review) => {
+        const card = document.createElement('div');
+        card.className = 'review-card';
+        const badges = review.badges.map(b => `<span>${b}</span>`).join('');
+        card.innerHTML = `
+            <div class="reviewer-meta">
+                <div class="reviewer-info">
+                    <h4>${review.name}</h4>
+                    <div class="badges">${badges}</div>
                 </div>
-                <p class="review-text">"${review.text}"</p>
-                <span class="review-date">${review.date}</span>
-            `;
-            return card;
-        };
+                <div class="stars">★★★★★</div>
+            </div>
+            <p class="review-text">"${review.text}"</p>
+            <span class="review-date">${review.date}</span>
+        `;
+        return card;
+    };
 
-        // On clone les données 3 fois pour garantir assez de contenu pour le scroll infini
+    // Injection des cartes (x3 pour la boucle infinie fluide)
+    if (track) {
         const infiniteReviews = [...reviewsData, ...reviewsData, ...reviewsData];
-        
         infiniteReviews.forEach(review => {
             track.appendChild(createCard(review));
         });
 
-        // Calcul de la largeur d'un set de données (pour savoir quand boucler)
-        // Note: On attend un peu que le DOM soit rendu pour calculer la largeur
-        setTimeout(() => {
-            const singleSetWidth = track.scrollWidth / 3;
+        // Animation Défilement Infini
+        const singleSetWidth = () => track.scrollWidth / 3;
+        
+        // Tween principal
+        const loopTween = gsap.to(track, {
+            x: () => -singleSetWidth(),
+            duration: 40,
+            ease: "none",
+            repeat: -1,
+            modifiers: {
+                x: gsap.utils.unitize(x => parseFloat(x) % singleSetWidth())
+            }
+        });
+
+        // --- Gestion des Flèches ---
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+
+        if (prevBtn && nextBtn) {
+            // Accélérer vers l'avant
+            nextBtn.addEventListener('mouseenter', () => gsap.to(loopTween, { timeScale: 4, duration: 0.5 }));
+            nextBtn.addEventListener('mouseleave', () => gsap.to(loopTween, { timeScale: 1, duration: 0.5 }));
             
-            gsap.to(track, {
-                x: -singleSetWidth,
-                duration: 40, // Vitesse du défilement
-                ease: "none",
-                repeat: -1,
-                modifiers: {
-                    x: gsap.utils.unitize(x => parseFloat(x) % singleSetWidth)
-                }
-            });
-        }, 100);
+            // Inverser / Reculer
+            prevBtn.addEventListener('mouseenter', () => gsap.to(loopTween, { timeScale: -4, duration: 0.5 }));
+            prevBtn.addEventListener('mouseleave', () => gsap.to(loopTween, { timeScale: 1, duration: 0.5 }));
+        }
     }
 
-    // 5. Animations Hero (Reveal)
+    // --- Animations Hero ---
     const heroTl = gsap.timeline();
     heroTl.from(".reveal-text", { y: 100, opacity: 0, duration: 1.2, ease: "power4.out" })
           .from(".reveal-sub", { y: 30, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.8")
           .from(".reveal-btn", { y: 20, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.6");
 
-    // 6. Navigation au scroll
+    // --- Navigation Scroll ---
     window.addEventListener('scroll', () => {
         const nav = document.querySelector('.navbar');
         if (window.scrollY > 50) nav.classList.add('nav-scrolled');
         else nav.classList.remove('nav-scrolled');
     });
 
-    // 7. Animations au Scroll (Cards & Fade)
+    // --- Animations ScrollTrigger ---
     gsap.utils.toArray('.animate-card').forEach((card, i) => {
         gsap.from(card, {
             scrollTrigger: {
@@ -104,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             y: 50,
             opacity: 0,
             duration: 0.8,
-            delay: i * 0.1, // Léger délai en cascade
+            delay: i * 0.1,
             ease: "power3.out"
         });
     });
@@ -113,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.from(el, {
             scrollTrigger: {
                 trigger: el,
-                start: "top 85%",
+                start: "top 90%",
             },
             y: 30,
             opacity: 0,
@@ -122,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 8. Effet Magnétique (Boutons)
+    // --- Bouton Magnétique ---
     const magneticBtns = document.querySelectorAll('.magnetic');
     if (window.innerWidth > 992) {
         magneticBtns.forEach(btn => {
@@ -137,4 +136,26 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // --- Stats Compteurs ---
+    const statNums = document.querySelectorAll('.stat-num');
+    statNums.forEach(num => {
+        const target = +num.getAttribute('data-target');
+        if (target) {
+            ScrollTrigger.create({
+                trigger: num,
+                start: "top 90%",
+                once: true,
+                onEnter: () => {
+                    let obj = { val: 0 };
+                    gsap.to(obj, {
+                        val: target,
+                        duration: 2,
+                        ease: "power3.out",
+                        onUpdate: () => num.textContent = Math.ceil(obj.val)
+                    });
+                }
+            });
+        }
+    });
 });
