@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plomberie St-Mars Inc. | Plomberie St-Mars </title>
+    <title>Plomberie St-Mars Inc. | Plomberie St-Mars</title>
     <meta name="description" content="Expertise en plomberie à Montréal. 4.8 étoiles, service d'urgence, résidentiel et gaz naturel.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +29,7 @@
 
     <section class="hero">
         <div class="hero-content">
-            <h1 class="reveal-text"> Plomberie <span>Saint Mars</span></h1>
+            <h1 class="reveal-text">Plomberie <span>Saint Mars</span></h1>
             <p class="reveal-sub">Expertise 4.8 Étoiles à Montréal — Précision & Propreté.</p>
             <div class="hero-btns reveal-btn">
                 <a href="tel:5149338411" class="btn-primary">(514) 933-8411</a>
@@ -52,29 +52,33 @@
         </div>
     </div>
 
+    <!-- SERVICES : 3 cartes égales sur une seule ligne -->
     <section id="services" class="services">
         <div class="section-header">
             <h2>Nos Services</h2>
         </div>
-        <div class="bento-grid">
-            <div class="bento-card card-large animate-card">
+        <div class="services-grid">
+            <div class="service-card animate-card">
+                <div class="service-icon"><i class="fa-solid fa-bell-concierge"></i></div>
                 <h3>Urgence 24/7</h3>
                 <p>Intervention rapide pour fuites et refoulements.</p>
-                <div class="card-bg"></div>
             </div>
-            <div class="bento-card animate-card">
+            <div class="service-card animate-card">
+                <div class="service-icon"><i class="fa-solid fa-house"></i></div>
                 <h3>Résidentiel</h3>
                 <p>Rénovation et entretien complet.</p>
             </div>
-            <div class="bento-card animate-card">
+            <div class="service-card animate-card">
+                <div class="service-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
                 <h3>Gaz Naturel</h3>
                 <p>Certification CMMTQ pour installations sécurisées.</p>
             </div>
         </div>
     </section>
 
+    <!-- TÉMOIGNAGES : carrousel infini, cartes uniformes -->
     <main id="main-content">
-        <section class="testimonials-section">
+        <section id="avis" class="testimonials-section">
             <div class="container">
                 <div class="header">
                     <h2 class="title">Ils nous font <span>confiance</span>.</h2>
@@ -82,51 +86,67 @@
 
                 <div class="carousel-wrapper">
                     <div class="bento-track" id="bento-track">
-                        <div class="bento-item card-large">
+                        <div class="bento-item">
                             <div class="content">
                                 <div class="rating">★★★★★</div>
-                                <p>"Une expérience utilisateur incroyable, le design est à couper le souffle."</p>
+                                <p>"Service impeccable, ponctuel et très professionnel. Je recommande fortement."</p>
                                 <div class="user">
                                     <div class="avatar"></div>
                                     <div class="info">
                                         <span class="name">Marc Dupont</span>
-                                        <span class="role">Directeur Créatif</span>
+                                        <span class="role">Client résidentiel</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="bento-item card-small">
-                            <div class="content">
-                                <p>"Rapide et élégant."</p>
-                                <span class="name">Léa V.</span>
-                            </div>
-                        </div>
-
-                        <div class="bento-item card-medium">
+                        <div class="bento-item">
                             <div class="content">
                                 <div class="rating">★★★★★</div>
-                                <p>"Le meilleur outil de bento grid pour mes projets SaaS."</p>
-                                <span class="name">Julie Martin</span>
+                                <p>"Intervention rapide pour une fuite d'urgence. Travail soigné, prix honnête."</p>
+                                <div class="user">
+                                    <div class="avatar"></div>
+                                    <div class="info">
+                                        <span class="name">Léa Vachon</span>
+                                        <span class="role">Cliente</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="bento-item card-small bg-accent">
-                            <div class="content">
-                                <i class="fa-solid fa-quote-left icon-quote"></i>
-                                <p>Simplement parfait.</p>
-                            </div>
-                        </div>
-
-                        <div class="bento-item card-large">
+                        <div class="bento-item">
                             <div class="content">
                                 <div class="rating">★★★★★</div>
-                                <p>"L'intégration 3D et les animations sont d'une fluidité exemplaire."</p>
+                                <p>"Excellent travail pour l'installation de gaz naturel. Certifiés et fiables."</p>
+                                <div class="user">
+                                    <div class="avatar"></div>
+                                    <div class="info">
+                                        <span class="name">Julie Martin</span>
+                                        <span class="role">Propriétaire</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bento-item">
+                            <div class="content">
+                                <div class="rating">★★★★★</div>
+                                <p>"Très satisfait de la rénovation complète de ma salle de bain. Propres et efficaces."</p>
+                                <div class="user">
+                                    <div class="avatar"></div>
+                                    <div class="info">
+                                        <span class="name">Antoine Leblanc</span>
+                                        <span class="role">Client</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bento-item">
+                            <div class="content">
+                                <div class="rating">★★★★★</div>
+                                <p>"Disponibles 24h/7, ils ont résolu mon problème de refoulement en moins d'une heure."</p>
                                 <div class="user">
                                     <div class="avatar"></div>
                                     <div class="info">
                                         <span class="name">Thomas Roche</span>
-                                        <span class="role">Lead Dev</span>
+                                        <span class="role">Client fidèle</span>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +154,7 @@
                     </div>
                 </div>
 
-                <!-- Flèches déplacées sous le carrousel -->
+                <!-- Flèches sous le carrousel -->
                 <div class="nav-controls">
                     <button class="nav-btn prev" aria-label="Précédent">
                         <i class="fa-solid fa-chevron-left"></i>
@@ -143,7 +163,6 @@
                         <i class="fa-solid fa-chevron-right"></i>
                     </button>
                 </div>
-
             </div>
         </section>
     </main>

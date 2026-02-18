@@ -20,10 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Cards scroll animation
     gsap.utils.toArray('.animate-card').forEach(card => {
         gsap.fromTo(card,
-            { scale: 0.8, opacity: 0, y: 50 },
+            { scale: 0.9, opacity: 0, y: 40 },
             {
                 scale: 1, opacity: 1, y: 0,
-                duration: 1, ease: "power3.out",
+                duration: 0.9, ease: "power3.out",
                 scrollTrigger: {
                     trigger: card,
                     start: "top 90%",
@@ -82,65 +82,135 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ── Carrousel avec flèches
-    const track     = document.getElementById('bento-track');
-    const btnPrev   = document.querySelector('.nav-btn.prev');
-    const btnNext   = document.querySelector('.nav-btn.next');
+    // ────────────────────────────────────────────────
+    // ── Carrousel INFINI avec flèches + drag + touch
+    // ────────────────────────────────────────────────
+    const track   = document.getElementById('bento-track');
+    const btnPrev = document.querySelector('.nav-btn.prev');
+    const btnNext = document.querySelector('.nav-btn.next');
 
     if (!track || !btnPrev || !btnNext) return;
 
-    const CARD_GAP   = 24;
-    // Largeur de défilement = largeur de la première carte + gap
-    const getStep = () => track.firstElementChild.offsetWidth + CARD_GAP;
+    const CARD_GAP = 24;
 
+    // 1. Cloner les cartes pour créer l'illusion d'infini
+    //    On clone tout le contenu original avant ET après
+    const originalItems = Array.from(track.children);
+    const totalOriginal = originalItems.length;
+
+    // Clone avant (à gauche) — pour pouvoir aller à gauche depuis le début
+    originalItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.insertBefore(clone, track.firstChild);
+    });
+
+    // Clone après (à droite) — pour continuer à droite depuis la fin
+    originalItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+    });
+
+    // 2. Calculer la largeur d'une carte (toutes identiques maintenant)
+    const getCardWidth = () => track.children[0].offsetWidth + CARD_GAP;
+
+    // 3. Positionner le track au début du bloc "original" (après les clones gauche)
+    //    = sauter totalOriginal cartes
     let currentX = 0;
-    const getMaxX = () => track.scrollWidth - track.parentElement.offsetWidth;
 
-    btnNext.addEventListener('click', () => {
-        currentX = Math.min(currentX + getStep(), getMaxX());
-        gsap.to(track, { x: -currentX, duration: 0.7, ease: "power3.inOut" });
-    });
+    const jumpToOriginalStart = () => {
+        currentX = totalOriginal * getCardWidth();
+        gsap.set(track, { x: -currentX });
+    };
 
-    btnPrev.addEventListener('click', () => {
-        currentX = Math.max(currentX - getStep(), 0);
-        gsap.to(track, { x: -currentX, duration: 0.7, ease: "power3.inOut" });
-    });
+    jumpToOriginalStart();
 
-    // Drag / swipe sur le carrousel
-    let isDragging = false;
-    let startX = 0;
-    let startScrollX = 0;
+    // 4. Helpers : largeur totale d'un bloc (original seulement)
+    const getBlockWidth = () => totalOriginal * getCardWidth();
+
+    // 5. Fonction de déplacement avec recentrage silencieux (téléportation)
+    const moveBy = (delta) => {
+        currentX += delta;
+        gsap.to(track, {
+            x: -currentX,
+            duration: 0.7,
+            ease: "power3.inOut",
+            onComplete: recenter
+        });
+    };
+
+    // Recentrage : si on est trop à gauche ou trop à droite, on téléporte
+    const recenter = () => {
+        const blockW = getBlockWidth();
+        // On est dans les clones de gauche → sauter vers les originaux
+        if (currentX < blockW * 0.5) {
+            currentX += blockW;
+            gsap.set(track, { x: -currentX });
+        }
+        // On est dans les clones de droite → revenir vers les originaux
+        if (currentX > blockW * 2.5) {
+            currentX -= blockW;
+            gsap.set(track, { x: -currentX });
+        }
+    };
+
+    // 6. Boutons flèches
+    btnNext.addEventListener('click', () => moveBy(getCardWidth()));
+    btnPrev.addEventListener('click', () => moveBy(-getCardWidth()));
+
+    // 7. Drag souris
+    let isDragging   = false;
+    let dragStartX   = 0;
+    let dragStartScrollX = 0;
 
     track.addEventListener('mousedown', (e) => {
         isDragging = true;
-        startX = e.clientX;
-        startScrollX = currentX;
+        dragStartX = e.clientX;
+        dragStartScrollX = currentX;
         track.style.cursor = 'grabbing';
+        gsap.killTweensOf(track);
     });
 
     window.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
-        const delta = startX - e.clientX;
-        currentX = Math.max(0, Math.min(startScrollX + delta, getMaxX()));
-        gsap.to(track, { x: -currentX, duration: 0.1, ease: "none" });
+        const delta = dragStartX - e.clientX;
+        currentX = dragStartScrollX + delta;
+        gsap.set(track, { x: -currentX });
     });
 
     window.addEventListener('mouseup', () => {
+        if (!isDragging) return;
         isDragging = false;
         track.style.cursor = 'grab';
+        recenter();
     });
 
-    // Touch support
+    // 8. Touch / swipe
+    let touchStartX = 0;
+    let touchStartScrollX = 0;
+
     track.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        startScrollX = currentX;
+        touchStartX = e.touches[0].clientX;
+        touchStartScrollX = currentX;
+        gsap.killTweensOf(track);
     }, { passive: true });
 
     track.addEventListener('touchmove', (e) => {
-        const delta = startX - e.touches[0].clientX;
-        currentX = Math.max(0, Math.min(startScrollX + delta, getMaxX()));
-        gsap.to(track, { x: -currentX, duration: 0.1, ease: "none" });
+        const delta = touchStartX - e.touches[0].clientX;
+        currentX = touchStartScrollX + delta;
+        gsap.set(track, { x: -currentX });
     }, { passive: true });
 
+    track.addEventListener('touchend', () => {
+        recenter();
+    });
+
+    // 9. Curseur grab par défaut
     track.style.cursor = 'grab';
+
+    // 10. Recalculer si la fenêtre est redimensionnée
+    window.addEventListener('resize', () => {
+        jumpToOriginalStart();
+    });
 });

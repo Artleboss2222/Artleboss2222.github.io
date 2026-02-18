@@ -32,127 +32,6 @@ h1, h2, h3, .logo {
     text-transform: uppercase;
 }
 
-/* ─── Testimonials Section ─── */
-.testimonials-section {
-    padding: 120px 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.container {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 40px;
-    width: 100%;
-}
-
-/* Header titre uniquement */
-.header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
-    margin-bottom: 60px;
-}
-
-.title {
-    font-size: 4rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    max-width: 500px;
-    line-height: 1.1;
-}
-
-.title span {
-    color: rgba(255,255,255,0.4);
-}
-
-/* ─── Flèches sous le carrousel ─── */
-.nav-controls {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 40px;
-}
-
-.nav-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-}
-
-.nav-btn:hover {
-    background: white;
-    color: black;
-    transform: scale(1.05);
-}
-
-/* ─── Carousel ─── */
-.carousel-wrapper {
-    position: relative;
-    width: 100vw;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    overflow: hidden;
-    padding: 20px 0;
-}
-
-.bento-track {
-    display: flex;
-    gap: 24px;
-    padding-left: 40px;
-    will-change: transform;
-}
-
-/* ─── Bento Cards ─── */
-.bento-item {
-    flex-shrink: 0;
-    border-radius: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.03);
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.bento-item:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.card-large  { width: 500px; height: 350px; }
-.card-medium { width: 400px; height: 350px; }
-.card-small  { width: 280px; height: 350px; }
-
-.bg-accent { background: var(--accent-blue); border: none; }
-.bg-accent .icon-quote { font-size: 3rem; opacity: 0.3; margin-bottom: 20px; }
-
-.rating { color: #FFD700; margin-bottom: 20px; font-size: 0.9rem; }
-.bento-item p { font-size: 1.4rem; line-height: 1.4; font-weight: 400; margin-bottom: 30px; }
-.card-small p { font-size: 1.1rem; }
-
-.user   { display: flex; align-items: center; gap: 15px; }
-.avatar { width: 48px; height: 48px; border-radius: 50%; background: #333; }
-.info .name { display: block; font-weight: 600; font-size: 1rem; }
-.info .role { display: block; font-size: 0.85rem; color: rgba(255,255,255,0.5); }
-
 /* ─── Navbar ─── */
 .navbar {
     position: fixed;
@@ -281,41 +160,221 @@ h1, h2, h3, .logo {
     color: rgba(255, 255, 255, 0.5);
 }
 
-/* ─── Services ─── */
+/* ─── Services : 3 cartes égales sur une ligne ─── */
 .services {
-    padding: 10rem 5%;
+    padding: 8rem 5%;
     max-width: 1400px;
     margin: 0 auto;
 }
 
-.bento-grid {
+.section-header {
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+.services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 300px;
     gap: 1.5rem;
 }
 
-.bento-card {
+.service-card {
     background: var(--surface);
-    padding: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    gap: 1.2rem;
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+.service-card:hover {
+    border-color: rgba(0, 85, 255, 0.4);
+    transform: translateY(-4px);
+}
+
+.service-icon {
+    width: 52px;
+    height: 52px;
     border-radius: 12px;
-    transition: transform 0.3s;
+    background: rgba(0, 85, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: var(--accent-blue);
+}
+
+.service-card h3 {
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.service-card p {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ─── Testimonials Section ─── */
+.testimonials-section {
+    padding: 120px 0;
+    background: var(--bg-body);
+}
+
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-bottom: 60px;
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    max-width: 500px;
+    line-height: 1.1;
+}
+
+.title span {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* ─── Carrousel infini ─── */
+.carousel-wrapper {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    margin-left: -50vw;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.bento-track {
+    display: flex;
+    gap: 24px;
+    padding-left: 40px;
+    will-change: transform;
+    /* La largeur est calculée dynamiquement par JS après clonage */
+}
+
+/* ─── Cartes du carrousel : toutes identiques ─── */
+.bento-item {
+    flex-shrink: 0;
+    width: 420px;
+    height: 280px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 36px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color 0.3s, background 0.3s;
     position: relative;
     overflow: hidden;
 }
 
-.bento-card.card-large {
-    grid-column: span 2;
-    background: linear-gradient(45deg, #111, #1a1a1a);
+.bento-item:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.05);
 }
 
-.bento-card h3 { font-size: 1.5rem; margin-bottom: 1rem; z-index: 2; }
-.bento-card p  { color: rgba(255, 255, 255, 0.6); z-index: 2; }
+.bento-item .content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
 
-/* ─── Location ─── */
+.rating {
+    color: var(--accent-gold);
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+}
+
+.bento-item p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.85);
+    flex: 1;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0055ff44, #0055ff22);
+    border: 1px solid rgba(0, 85, 255, 0.3);
+    flex-shrink: 0;
+}
+
+.info .name {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+.info .role {
+    display: block;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* ─── Flèches sous le carrousel ─── */
+.nav-controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.nav-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.nav-btn:hover {
+    background: white;
+    color: black;
+    transform: scale(1.05);
+}
+
+/* ─── Location / Contact ─── */
 .map-placeholder {
     height: 500px;
     background: #111 url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&q=80&w=2000') center/cover;
@@ -356,12 +415,9 @@ footer {
 /* ─── Responsive ─── */
 @media (max-width: 992px) {
     .nav-links, .btn-cta.magnetic { display: none; }
-    .bento-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
-    .bento-card.card-large { grid-column: span 1; padding: 4rem 2rem; }
+    .services-grid { grid-template-columns: 1fr; }
     .hero h1 { font-size: 4rem; }
     .stats-banner { flex-direction: column; gap: 3rem; }
     .title { font-size: 2.5rem; }
-    .card-large  { width: 340px; }
-    .card-medium { width: 300px; }
-    .card-small  { width: 240px; }
+    .bento-item { width: 300px; height: 260px; }
 }
