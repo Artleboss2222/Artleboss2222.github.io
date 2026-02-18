@@ -135,6 +135,29 @@ h1, h2, h3, .logo {
     box-shadow: 0 0 30px rgba(0, 85, 255, 0.4);
 }
 
+.hero-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.7);
+    padding: 1.2rem 2.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    border-color: rgba(255,255,255,0.5);
+    color: var(--text-main);
+}
+
 /* ─── Stats ─── */
 .stats-banner {
     display: flex;

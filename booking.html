@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demande de Service — Plomberie St-Mars Inc.</title>
+    <meta name="description" content="Décrivez votre problème de plomberie et obtenez une réponse rapide de Plomberie St-Mars.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        /* ─── Reset & Variables ─── */
+        :root {
+            --bg-body:      #050505;
+            --text-main:    #ffffff;
+            --accent-blue:  #0055ff;
+            --accent-gold:  #FFD700;
+            --surface:      #111111;
+            --surface-2:    #181818;
+            --border:       rgba(255,255,255,0.08);
+            --border-hover: rgba(0,85,255,0.45);
+            --transition:   cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; outline:none; }
+
+        html { scroll-behavior:smooth; background:var(--bg-body); }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1,h2,h3,h4,.logo { font-family:'Syne',sans-serif; text-transform:uppercase; }
+
+        /* ─── Navbar ─── */
+        .navbar {
+            position: fixed;
+            top: 0; width: 100%;
+            z-index: 1000;
+            padding: 1.2rem 0;
+            background: rgba(5,5,5,0.7);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-back:hover { color: var(--text-main); }
+
+        .nav-phone {
+            background: var(--accent-blue);
+            color: white;
+            padding: 0.7rem 1.3rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* ─── Page Layout ─── */
+        .page-wrapper {
+            min-height: 100vh;
+            padding-top: 100px;
+            padding-bottom: 80px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .booking-container {
+            width: 100%;
+            max-width: 720px;
+            padding: 0 24px;
+        }
+
+        /* ─── Header ─── */
+        .booking-header {
+            margin-bottom: 48px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .booking-header .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-blue);
+            margin-bottom: 16px;
+        }
+
+        .booking-header .tag::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: var(--accent-blue);
+        }
+
+        .booking-header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .booking-header h1 span { color: var(--accent-blue); }
+
+        .booking-header p {
+            color: rgba(255,255,255,0.5);
+            font-size: 1rem;
+        }
+
+        /* ─── Progress Bar ─── */
+        .progress-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: 'Syne', sans-serif;
+            color: rgba(255,255,255,0.3);
+            flex-shrink: 0;
+            transition: all 0.4s var(--transition);
+        }
+
+        .step-circle.active {
+            border-color: var(--accent-blue);
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .step-circle.done {
+            border-color: rgba(0,85,255,0.4);
+            background: rgba(0,85,255,0.15);
+            color: var(--accent-blue);
+        }
+
+        .step-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.3);
+            transition: color 0.4s;
+            white-space: nowrap;
+        }
+
+        .progress-step.active .step-label { color: rgba(255,255,255,0.8); }
+        .progress-step.done  .step-label  { color: rgba(0,85,255,0.7); }
+
+        .step-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            margin: 0 12px;
+            transition: background 0.4s;
+        }
+
+        .step-line.done { background: rgba(0,85,255,0.3); }
+
+        /* ─── Form Card ─── */
+        .form-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px;
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        /* ─── Step Panels ─── */
+        .step-panel { display: none; }
+        .step-panel.active { display: block; }
+
+        .step-panel h2 {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+        }
+
+        .step-panel .step-desc {
+            color: rgba(255,255,255,0.45);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        /* ─── Fields ─── */
+        .field-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .field-group.full { grid-template-columns: 1fr; }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.45);
+        }
+
+        .field input,
+        .field textarea,
+        .field select {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+            width: 100%;
+        }
+
+        .field input::placeholder,
+        .field textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+        .field input:focus,
+        .field textarea:focus,
+        .field select:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .field textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .field select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.3)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        .field select option { background: #1a1a1a; }
+
+        /* ─── Urgence Toggle ─── */
+        .urgence-toggle {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .urgence-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            color: rgba(255,255,255,0.45);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .urgence-btn:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.7);
+        }
+
+        .urgence-btn.selected-urgence {
+            border-color: #ff4444;
+            background: rgba(255,68,68,0.1);
+            color: #ff6666;
+        }
+
+        .urgence-btn.selected-normal {
+            border-color: var(--accent-blue);
+            background: rgba(0,85,255,0.1);
+            color: #6699ff;
+        }
+
+        /* ─── Service Type Cards ─── */
+        .service-type-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .service-type-card {
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.3s;
+        }
+
+        .service-type-card:hover {
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .service-type-card.selected {
+            border-color: var(--accent-blue);
+            background: rgba(0,85,255,0.08);
+        }
+
+        .service-type-card .card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.4);
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .service-type-card.selected .card-icon {
+            background: rgba(0,85,255,0.15);
+            color: var(--accent-blue);
+        }
+
+        .service-type-card .card-text strong {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 2px;
+        }
+
+        .service-type-card .card-text span {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.35);
+        }
+
+        /* ─── Photo Upload ─── */
+        .photo-drop {
+            border: 1px dashed rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .photo-drop:hover,
+        .photo-drop.dragover {
+            border-color: var(--accent-blue);
+            background: rgba(0,85,255,0.04);
+        }
+
+        .photo-drop input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .photo-drop .drop-icon {
+            font-size: 2rem;
+            color: rgba(255,255,255,0.15);
+            margin-bottom: 12px;
+        }
+
+        .photo-drop p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.35);
+        }
+
+        .photo-drop p strong { color: rgba(255,255,255,0.6); }
+
+        .photo-previews {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .photo-preview {
+            width: 72px;
+            height: 72px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+        }
+
+        /* ─── Date/Time Slots ─── */
+        .date-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .time-slot {
+            padding: 12px 8px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-slot:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.8);
+        }
+
+        .time-slot.selected {
+            border-color: var(--accent-blue);
+            background: rgba(0,85,255,0.12);
+            color: #6699ff;
+        }
+
+        /* ─── Summary (Step 4) ─── */
+        .summary-block {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .summary-block h4 {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 14px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            gap: 16px;
+        }
+
+        .summary-row:last-child { border-bottom: none; }
+
+        .summary-row .s-label {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.35);
+            white-space: nowrap;
+        }
+
+        .summary-row .s-value {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.85);
+            text-align: right;
+        }
+
+        .urgence-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .urgence-badge.rouge {
+            background: rgba(255,68,68,0.15);
+            color: #ff6666;
+            border: 1px solid rgba(255,68,68,0.3);
+        }
+
+        .urgence-badge.bleu {
+            background: rgba(0,85,255,0.15);
+            color: #6699ff;
+            border: 1px solid rgba(0,85,255,0.3);
+        }
+
+        /* ─── Navigation Buttons ─── */
+        .form-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 36px;
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn-back {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: rgba(255,255,255,0.45);
+            padding: 0.85rem 1.6rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: var(--text-main);
+        }
+
+        .btn-next {
+            background: var(--accent-blue);
+            border: none;
+            color: white;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-next:hover {
+            background: #0044dd;
+            box-shadow: 0 0 30px rgba(0,85,255,0.35);
+            transform: translateY(-1px);
+        }
+
+        .btn-next.submit {
+            background: linear-gradient(135deg, #0055ff, #0033cc);
+        }
+
+        /* ─── Success Screen ─── */
+        .success-screen {
+            display: none;
+            text-align: center;
+            padding: 24px 0;
+        }
+
+        .success-screen.visible { display: block; }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(0,85,255,0.12);
+            border: 1px solid rgba(0,85,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--accent-blue);
+            margin: 0 auto 28px;
+        }
+
+        .success-screen h2 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .success-screen h2 span { color: var(--accent-blue); }
+
+        .success-screen p {
+            color: rgba(255,255,255,0.5);
+            max-width: 400px;
+            margin: 0 auto 32px;
+            font-size: 0.95rem;
+        }
+
+        .success-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-call {
+            background: var(--accent-blue);
+            color: white;
+            padding: 0.85rem 1.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-call:hover {
+            background: #0044dd;
+            box-shadow: 0 0 30px rgba(0,85,255,0.35);
+        }
+
+        .btn-home {
+            border: 1px solid var(--border);
+            color: rgba(255,255,255,0.5);
+            padding: 0.85rem 1.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-home:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: var(--text-main);
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 640px) {
+            .form-card { padding: 28px 20px; }
+            .field-group { grid-template-columns: 1fr; }
+            .service-type-grid { grid-template-columns: 1fr; }
+            .time-slots { grid-template-columns: repeat(2, 1fr); }
+            .progress-wrap { gap: 4px; }
+            .step-label { display: none; }
+            .step-line { margin: 0 6px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">ST-MARS</a>
+            <a href="index.html" class="nav-back">
+                <i class="fa-solid fa-arrow-left"></i> Retour au site
+            </a>
+            <a href="tel:5149338411" class="nav-phone">
+                <i class="fa-solid fa-phone"></i> (514) 933-8411
+            </a>
+        </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="page-wrapper">
+        <div class="booking-container">
+
+            <!-- Header -->
+            <div class="booking-header">
+                <div class="tag">Demande de service</div>
+                <h1>Décrivez votre <span>problème</span></h1>
+                <p>Remplissez le formulaire en 4 étapes — nous vous recontactons sous 30 minutes.</p>
+            </div>
+
+            <!-- Progress -->
+            <div class="progress-wrap" id="progress-wrap">
+                <div class="progress-step active" id="ps-1">
+                    <div class="step-circle active" id="sc-1">1</div>
+                    <span class="step-label">Coordonnées</span>
+                </div>
+                <div class="step-line" id="sl-1"></div>
+                <div class="progress-step" id="ps-2">
+                    <div class="step-circle" id="sc-2">2</div>
+                    <span class="step-label">Problème</span>
+                </div>
+                <div class="step-line" id="sl-2"></div>
+                <div class="progress-step" id="ps-3">
+                    <div class="step-circle" id="sc-3">3</div>
+                    <span class="step-label">Disponibilité</span>
+                </div>
+                <div class="step-line" id="sl-3"></div>
+                <div class="progress-step" id="ps-4">
+                    <div class="step-circle" id="sc-4">4</div>
+                    <span class="step-label">Confirmation</span>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+            <div class="form-card" id="form-card">
+
+                <!-- ── ÉTAPE 1 : Coordonnées ── -->
+                <div class="step-panel active" id="step-1">
+                    <h2>Vos coordonnées</h2>
+                    <p class="step-desc">Pour qu'on puisse vous rejoindre rapidement.</p>
+
+                    <div class="field-group">
+                        <div class="field">
+                            <label>Prénom *</label>
+                            <input type="text" id="prenom" placeholder="Jean" />
+                        </div>
+                        <div class="field">
+                            <label>Nom *</label>
+                            <input type="text" id="nom" placeholder="Tremblay" />
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <div class="field">
+                            <label>Téléphone *</label>
+                            <input type="tel" id="telephone" placeholder="(514) 000-0000" />
+                        </div>
+                        <div class="field">
+                            <label>Courriel</label>
+                            <input type="email" id="email" placeholder="jean@exemple.com" />
+                        </div>
+                    </div>
+
+                    <div class="field-group full">
+                        <div class="field">
+                            <label>Adresse complète *</label>
+                            <input type="text" id="adresse" placeholder="1234 Rue Exemple, Montréal, QC" />
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <div class="field">
+                            <label>Appartement / Unité</label>
+                            <input type="text" id="appt" placeholder="App. 4B" />
+                        </div>
+                        <div class="field">
+                            <label>Code postal</label>
+                            <input type="text" id="codepostal" placeholder="H0H 0H0" />
+                        </div>
+                    </div>
+
+                    <div class="form-nav">
+                        <div></div>
+                        <button class="btn-next" onclick="nextStep(1)">
+                            Continuer <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ── ÉTAPE 2 : Problème ── -->
+                <div class="step-panel" id="step-2">
+                    <h2>Le problème</h2>
+                    <p class="step-desc">Dites-nous ce qui se passe pour qu'on arrive préparé.</p>
+
+                    <!-- Urgence -->
+                    <span class="date-label">Niveau d'urgence</span>
+                    <div class="urgence-toggle" style="margin-bottom:24px;">
+                        <button class="urgence-btn" id="btn-urgence" onclick="setUrgence('urgence')">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Urgence — maintenant
+                        </button>
+                        <button class="urgence-btn" id="btn-normal" onclick="setUrgence('normal')">
+                            <i class="fa-solid fa-calendar-check"></i> Planifié — sans urgence
+                        </button>
+                    </div>
+
+                    <!-- Type de service -->
+                    <span class="date-label">Type de service</span>
+                    <div class="service-type-grid">
+                        <div class="service-type-card" onclick="selectService(this, 'Fuite d\'eau')">
+                            <div class="card-icon"><i class="fa-solid fa-droplet"></i></div>
+                            <div class="card-text">
+                                <strong>Fuite d'eau</strong>
+                                <span>Tuyaux, robinets, joints</span>
+                            </div>
+                        </div>
+                        <div class="service-type-card" onclick="selectService(this, 'Refoulement')">
+                            <div class="card-icon"><i class="fa-solid fa-arrows-up-down"></i></div>
+                            <div class="card-text">
+                                <strong>Refoulement</strong>
+                                <span>Égouts, drain, odeurs</span>
+                            </div>
+                        </div>
+                        <div class="service-type-card" onclick="selectService(this, 'Gaz naturel')">
+                            <div class="card-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                            <div class="card-text">
+                                <strong>Gaz naturel</strong>
+                                <span>Installation, inspection</span>
+                            </div>
+                        </div>
+                        <div class="service-type-card" onclick="selectService(this, 'Rénovation')">
+                            <div class="card-icon"><i class="fa-solid fa-wrench"></i></div>
+                            <div class="card-text">
+                                <strong>Rénovation</strong>
+                                <span>Salle de bain, cuisine</span>
+                            </div>
+                        </div>
+                        <div class="service-type-card" onclick="selectService(this, 'Chauffe-eau')">
+                            <div class="card-icon"><i class="fa-solid fa-temperature-high"></i></div>
+                            <div class="card-text">
+                                <strong>Chauffe-eau</strong>
+                                <span>Remplacement, réparation</span>
+                            </div>
+                        </div>
+                        <div class="service-type-card" onclick="selectService(this, 'Autre')">
+                            <div class="card-icon"><i class="fa-solid fa-circle-question"></i></div>
+                            <div class="card-text">
+                                <strong>Autre</strong>
+                                <span>Je décris ci-dessous</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="field-group full" style="margin-top:16px;">
+                        <div class="field">
+                            <label>Description du problème *</label>
+                            <textarea id="description" placeholder="Décrivez ce que vous observez : depuis quand, à quel endroit dans la maison, symptômes visibles..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Photos -->
+                    <span class="date-label">Photos (optionnel)</span>
+                    <div id="photo-previews" class="photo-previews"></div>
+                    <div class="photo-drop" id="photo-drop">
+                        <input type="file" accept="image/*" multiple id="photo-input" onchange="handlePhotos(this)" />
+                        <div class="drop-icon"><i class="fa-solid fa-camera"></i></div>
+                        <p><strong>Cliquez ou glissez vos photos ici</strong></p>
+                        <p>JPG, PNG, HEIC — max 5 fichiers</p>
+                    </div>
+
+                    <div class="form-nav">
+                        <button class="btn-back" onclick="prevStep(2)">
+                            <i class="fa-solid fa-arrow-left"></i> Retour
+                        </button>
+                        <button class="btn-next" onclick="nextStep(2)">
+                            Continuer <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ── ÉTAPE 3 : Disponibilité ── -->
+                <div class="step-panel" id="step-3">
+                    <h2>Vos disponibilités</h2>
+                    <p class="step-desc">Choisissez quand vous pouvez nous recevoir.</p>
+
+                    <div class="field-group full">
+                        <div class="field">
+                            <label>Date préférée *</label>
+                            <input type="date" id="date-pref" />
+                        </div>
+                    </div>
+
+                    <span class="date-label" style="margin-top:8px;">Plage horaire préférée</span>
+                    <div class="time-slots">
+                        <div class="time-slot" onclick="selectSlot(this)">7h – 9h</div>
+                        <div class="time-slot" onclick="selectSlot(this)">9h – 11h</div>
+                        <div class="time-slot" onclick="selectSlot(this)">11h – 13h</div>
+                        <div class="time-slot" onclick="selectSlot(this)">13h – 15h</div>
+                        <div class="time-slot" onclick="selectSlot(this)">15h – 17h</div>
+                        <div class="time-slot" onclick="selectSlot(this)">Soir / Flexible</div>
+                    </div>
+
+                    <div class="field-group full">
+                        <div class="field">
+                            <label>Notes sur l'accès (optionnel)</label>
+                            <input type="text" id="acces" placeholder="Code de porte, interphone, chien dans la cour..." />
+                        </div>
+                    </div>
+
+                    <div class="form-nav">
+                        <button class="btn-back" onclick="prevStep(3)">
+                            <i class="fa-solid fa-arrow-left"></i> Retour
+                        </button>
+                        <button class="btn-next" onclick="nextStep(3)">
+                            Vérifier <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ── ÉTAPE 4 : Confirmation ── -->
+                <div class="step-panel" id="step-4">
+                    <h2>Confirmation</h2>
+                    <p class="step-desc">Vérifiez vos informations avant d'envoyer.</p>
+
+                    <div class="summary-block">
+                        <h4>Coordonnées</h4>
+                        <div class="summary-row">
+                            <span class="s-label">Nom</span>
+                            <span class="s-value" id="s-nom">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="s-label">Téléphone</span>
+                            <span class="s-value" id="s-tel">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="s-label">Courriel</span>
+                            <span class="s-value" id="s-email">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="s-label">Adresse</span>
+                            <span class="s-value" id="s-adresse">—</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-block">
+                        <h4>Problème</h4>
+                        <div class="summary-row">
+                            <span class="s-label">Urgence</span>
+                            <span class="s-value" id="s-urgence">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="s-label">Type</span>
+                            <span class="s-value" id="s-type">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="s-label">Description</span>
+                            <span class="s-value" id="s-desc" style="max-width:340px;">—</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-block">
+                        <h4>Disponibilité</h4>
+                        <div class="summary-row">
+                            <span class="s-label">Date</span>
+                            <span class="s-value" id="s-date">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="s-label">Plage horaire</span>
+                            <span class="s-value" id="s-slot">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="s-label">Accès</span>
+                            <span class="s-value" id="s-acces">—</span>
+                        </div>
+                    </div>
+
+                    <div class="form-nav">
+                        <button class="btn-back" onclick="prevStep(4)">
+                            <i class="fa-solid fa-arrow-left"></i> Modifier
+                        </button>
+                        <button class="btn-next submit" onclick="submitForm()">
+                            <i class="fa-solid fa-paper-plane"></i> Envoyer la demande
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ── SUCCÈS ── -->
+                <div class="success-screen" id="success-screen">
+                    <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+                    <h2>Demande <span>envoyée</span> !</h2>
+                    <p>Nous avons reçu votre demande et vous contacterons dans les 30 prochaines minutes. Pour une urgence immédiate, appelez-nous directement.</p>
+                    <div class="success-actions">
+                        <a href="tel:5149338411" class="btn-call">
+                            <i class="fa-solid fa-phone"></i> (514) 933-8411
+                        </a>
+                        <a href="index.html" class="btn-home">
+                            <i class="fa-solid fa-house"></i> Retour au site
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- /form-card -->
+        </div>
+    </div>
+
+    <script>
+        // ── État global
+        let currentStep = 1;
+        let urgenceValue = '';
+        let serviceType  = '';
+        let selectedSlot = '';
+
+        // ── Animations d'entrée
+        window.addEventListener('load', () => {
+            gsap.to('.booking-header',  { opacity:1, y:0, duration:0.9, ease:'power3.out', delay:0.1 });
+            gsap.to('#progress-wrap',   { opacity:1, y:0, duration:0.8, ease:'power3.out', delay:0.25 });
+            gsap.to('#form-card',       { opacity:1, y:0, duration:0.8, ease:'power3.out', delay:0.4 });
+        });
+
+        // ── Urgence
+        function setUrgence(val) {
+            urgenceValue = val;
+            const bu = document.getElementById('btn-urgence');
+            const bn = document.getElementById('btn-normal');
+            bu.className = 'urgence-btn' + (val === 'urgence' ? ' selected-urgence' : '');
+            bn.className = 'urgence-btn' + (val === 'normal'  ? ' selected-normal'  : '');
+        }
+
+        // ── Type de service
+        function selectService(el, val) {
+            document.querySelectorAll('.service-type-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            serviceType = val;
+        }
+
+        // ── Plage horaire
+        function selectSlot(el) {
+            document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedSlot = el.textContent.trim();
+        }
+
+        // ── Photos
+        function handlePhotos(input) {
+            const previews = document.getElementById('photo-previews');
+            previews.innerHTML = '';
+            const files = Array.from(input.files).slice(0, 5);
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'photo-preview';
+                    previews.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+            if (files.length) {
+                document.getElementById('photo-drop').style.display = 'none';
+            }
+        }
+
+        // ── Drag & Drop zone
+        const dropZone = document.getElementById('photo-drop');
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            document.getElementById('photo-input').files = e.dataTransfer.files;
+            handlePhotos(document.getElementById('photo-input'));
+        });
+
+        // ── Navigation entre étapes
+        function goToStep(from, to) {
+            // Masquer l'ancienne étape
+            document.getElementById('step-' + from).classList.remove('active');
+
+            // Mettre à jour la progress bar
+            const fromCircle = document.getElementById('sc-' + from);
+            const fromStep   = document.getElementById('ps-' + from);
+            fromCircle.innerHTML = '<i class="fa-solid fa-check" style="font-size:0.75rem;"></i>';
+            fromCircle.className = 'step-circle done';
+            fromStep.className   = 'progress-step done';
+
+            if (document.getElementById('sl-' + from)) {
+                document.getElementById('sl-' + from).classList.add('done');
+            }
+
+            // Activer la nouvelle étape
+            const toCircle = document.getElementById('sc-' + to);
+            const toStep   = document.getElementById('ps-' + to);
+            toCircle.className = 'step-circle active';
+            toStep.className   = 'progress-step active';
+
+            // Remplir le résumé si étape 4
+            if (to === 4) fillSummary();
+
+            // Afficher nouvelle étape avec animation
+            const panel = document.getElementById('step-' + to);
+            panel.classList.add('active');
+            gsap.fromTo(panel, { opacity:0, x:30 }, { opacity:1, x:0, duration:0.5, ease:'power3.out' });
+
+            currentStep = to;
+        }
+
+        function goBackTo(from, to) {
+            document.getElementById('step-' + from).classList.remove('active');
+
+            // Remettre l'étape "from" en état actif (pas done)
+            const fromCircle = document.getElementById('sc-' + from);
+            const fromStep   = document.getElementById('ps-' + from);
+            fromCircle.innerHTML = from;
+            fromCircle.className = 'step-circle';
+            fromStep.className   = 'progress-step';
+
+            if (document.getElementById('sl-' + to)) {
+                document.getElementById('sl-' + to).classList.remove('done');
+            }
+
+            // Activer l'étape précédente
+            const toCircle = document.getElementById('sc-' + to);
+            const toStep   = document.getElementById('ps-' + to);
+            toCircle.innerHTML = to;
+            toCircle.className = 'step-circle active';
+            toStep.className   = 'progress-step active';
+
+            const panel = document.getElementById('step-' + to);
+            panel.classList.add('active');
+            gsap.fromTo(panel, { opacity:0, x:-30 }, { opacity:1, x:0, duration:0.5, ease:'power3.out' });
+
+            currentStep = to;
+        }
+
+        function nextStep(step) {
+            // Validation légère
+            if (step === 1) {
+                const prenom = document.getElementById('prenom').value.trim();
+                const tel    = document.getElementById('telephone').value.trim();
+                const adresse = document.getElementById('adresse').value.trim();
+                if (!prenom || !tel || !adresse) {
+                    shakeCard();
+                    return;
+                }
+            }
+            if (step === 2) {
+                const desc = document.getElementById('description').value.trim();
+                if (!desc) { shakeCard(); return; }
+            }
+            if (step === 3) {
+                const date = document.getElementById('date-pref').value;
+                if (!date) { shakeCard(); return; }
+            }
+            goToStep(step, step + 1);
+        }
+
+        function prevStep(step) {
+            goBackTo(step, step - 1);
+        }
+
+        function shakeCard() {
+            gsap.fromTo('#form-card', { x:0 }, {
+                x: 10, duration:0.07, yoyo:true, repeat:5, ease:'none',
+                onComplete: () => gsap.set('#form-card', { x:0 })
+            });
+        }
+
+        // ── Remplir le résumé
+        function fillSummary() {
+            const prenom  = document.getElementById('prenom').value.trim();
+            const nom     = document.getElementById('nom').value.trim();
+            const tel     = document.getElementById('telephone').value.trim();
+            const email   = document.getElementById('email').value.trim();
+            const adresse = document.getElementById('adresse').value.trim();
+            const appt    = document.getElementById('appt').value.trim();
+            const cp      = document.getElementById('codepostal').value.trim();
+            const desc    = document.getElementById('description').value.trim();
+            const date    = document.getElementById('date-pref').value;
+            const acces   = document.getElementById('acces').value.trim();
+
+            document.getElementById('s-nom').textContent    = [prenom, nom].filter(Boolean).join(' ') || '—';
+            document.getElementById('s-tel').textContent    = tel || '—';
+            document.getElementById('s-email').textContent  = email || '—';
+
+            let adresseFull = adresse;
+            if (appt) adresseFull += ', ' + appt;
+            if (cp)   adresseFull += ', ' + cp;
+            document.getElementById('s-adresse').textContent = adresseFull || '—';
+
+            // Urgence badge
+            const sUrg = document.getElementById('s-urgence');
+            if (urgenceValue === 'urgence') {
+                sUrg.innerHTML = '<span class="urgence-badge rouge"><i class="fa-solid fa-triangle-exclamation"></i> Urgence</span>';
+            } else if (urgenceValue === 'normal') {
+                sUrg.innerHTML = '<span class="urgence-badge bleu"><i class="fa-solid fa-calendar-check"></i> Planifié</span>';
+            } else {
+                sUrg.textContent = '—';
+            }
+
+            document.getElementById('s-type').textContent  = serviceType || '—';
+            document.getElementById('s-desc').textContent  = desc || '—';
+
+            // Date formatée
+            let dateFmt = '—';
+            if (date) {
+                const d = new Date(date + 'T12:00:00');
+                dateFmt = d.toLocaleDateString('fr-CA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+                dateFmt = dateFmt.charAt(0).toUpperCase() + dateFmt.slice(1);
+            }
+            document.getElementById('s-date').textContent  = dateFmt;
+            document.getElementById('s-slot').textContent  = selectedSlot || '—';
+            document.getElementById('s-acces').textContent = acces || '—';
+        }
+
+        // ── Envoi (simulation)
+        function submitForm() {
+            const btn = document.querySelector('.btn-next.submit');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                // Masquer les étapes et la progress bar
+                document.getElementById('step-4').classList.remove('active');
+                document.getElementById('progress-wrap').style.display = 'none';
+
+                // Afficher le succès
+                const success = document.getElementById('success-screen');
+                success.classList.add('visible');
+                gsap.fromTo(success,
+                    { opacity:0, scale:0.95 },
+                    { opacity:1, scale:1, duration:0.6, ease:'back.out(1.3)' }
+                );
+            }, 1800);
+        }
+    </script>
+</body>
+</html>
