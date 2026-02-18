@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
@@ -71,24 +72,16 @@
             </div>
         </div>
     </section>
+
     <main id="main-content">
         <section class="testimonials-section">
             <div class="container">
                 <div class="header">
                     <h2 class="title">Ils nous font <span>confiance</span>.</h2>
-                    <div class="nav-controls">
-                        <button class="nav-btn prev" aria-label="Précédent">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </button>
-                        <button class="nav-btn next" aria-label="Suivant">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
-                    </div>
                 </div>
 
                 <div class="carousel-wrapper">
                     <div class="bento-track" id="bento-track">
-                        <!-- Les cartes seront clonées par JS pour l'effet infini -->
                         <div class="bento-item card-large">
                             <div class="content">
                                 <div class="rating">★★★★★</div>
@@ -140,6 +133,17 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Flèches déplacées sous le carrousel -->
+                <div class="nav-controls">
+                    <button class="nav-btn prev" aria-label="Précédent">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button class="nav-btn next" aria-label="Suivant">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
             </div>
         </section>
     </main>
