@@ -2,12 +2,18 @@ html{
     background-color: black;
 }
 body{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     text-align: center;
-    color: #0055ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .MIT{
-    font-size: large;
+ height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    font-style: bold;
+    padding: 0 5%;
+    background: radial-gradient(circle at 50% 50%, #111 0%, #050505 100%);
 }
