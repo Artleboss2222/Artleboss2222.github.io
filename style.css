@@ -451,67 +451,41 @@ footer {
     right: 20px;
     z-index: 1000;
     font-family: Arial, sans-serif;
+/* Animation de base pour l'entrée */
+#chatbot-window {
+    transform-origin: bottom right;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* ... reste de tes styles précédents ... */
 }
 
-/* Le bouton toilette */
-#toilet-button {
-    width: 60px;
-    height: 60px;
-    background-color: #ffffff;
-    border: 3px solid #007bff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease;
-}
-
-#toilet-button:hover {
-    transform: scale(1.1) rotate(-5deg);
-}
-
-.toilet-emoji {
-    font-size: 35px;
-}
-
-/* Fenêtre d'options */
-#chatbot-options {
-    position: absolute;
-    bottom: 80px;
-    right: 0;
-    width: 250px;
-    background: white;
-    border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    border: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-#chatbot-options h3 {
-    margin: 0 0 10px 0;
-    font-size: 18px;
-    color: #333;
-}
-
-#chatbot-options button {
+#booking-container {
+    background: #f0f7ff;
     padding: 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: left;
-    transition: background 0.2s;
+    border-radius: 10px;
+    margin-top: 10px;
+    border: 1px dashed #007bff;
 }
 
-#chatbot-options button:hover {
-    background-color: #0056b3;
+#booking-date {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #007bff;
+    border-radius: 5px;
 }
+
+#confirm-booking-btn {
+    width: 100%;
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
 
 /* Classe pour cacher/montrer */
 .hidden {
