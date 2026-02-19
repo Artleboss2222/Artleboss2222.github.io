@@ -133,27 +133,34 @@ h1, h2, h3, .logo {
 .avatar img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Flèches de navigation */
-.nav-controls { display: flex; gap: 1rem; margin-top: 2rem; }
+/* Conteneur des flèches */
+.nav-controls { 
+    display: flex; 
+    gap: 1rem; 
+    margin-top: 3rem;       /* Un peu plus d'espace sous les cartes */
+    justify-content: center; /* C'est cette ligne qui centre les flèches dans la page */
+    width: 100%;            /* S'assure que le conteneur utilise tout l'espace */
+}
+
+/* Les boutons eux-mêmes (pour que l'icône soit au milieu du cercle) */
 .nav-btn {
-    background: none;
+    background: none; 
     border: 1px solid rgba(255,255,255,0.2);
-    color: white;
-    width: 50px;
-    height: 50px;
+    color: white; 
+    width: 50px; 
+    height: 50px; 
     border-radius: 50%;
-    cursor: pointer;
+    cursor: pointer; 
     transition: 0.3s;
-    display: inline-flex;
+    
+    /* Centrage de l'icône <i> à l'intérieur du rond */
+    display: flex;  
     align-items: center;
     justify-content: center;
-    padding: 0; 
-    line-height: 1; 
-    overflow: hidden;
+    padding: 0;      /* Retire les espacements par défaut */
+    line-height: 1;  /* Évite le décalage vertical */
 }
-.nav-btn i {
-    display: block;
-    line-height: 0;
-}
+
 .nav-btn:hover { 
     background: white; 
     color: black; 
