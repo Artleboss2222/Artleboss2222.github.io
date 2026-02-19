@@ -135,16 +135,30 @@ h1, h2, h3, .logo {
 /* Flèches de navigation */
 .nav-controls { display: flex; gap: 1rem; margin-top: 2rem; }
 .nav-btn {
-    background: none; border: 1px solid rgba(255,255,255,0.2);
-    color: white; width: 50px; height: 50px; border-radius: 50%;
-    cursor: pointer; transition: 0.3s;
-    display: flex; 
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: 0; 
+    line-height: 1; 
+    overflow: hidden;
 }
-.nav-btn:hover { background: white; color: black; }
+.nav-btn i {
+    display: block;
+    line-height: 0;
+}
+.nav-btn:hover { 
+    background: white; 
+    color: black; 
+}
 
-/* Location */
 .location { padding: 5%; background: var(--bg-body); margin-bottom: 50px; }
 .map-placeholder {
     height: 300px; background: #000000; border-radius: 20px;
