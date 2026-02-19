@@ -105,6 +105,7 @@ function handleOption(type) {
         setTimeout(() => window.location.href = "booking.html", 1500);
     } else {
         p.innerHTML = "📅 <strong>RDV :</strong> Quel moment vous conviendrait le mieux ? Appelez-nous ou remplissez le formulaire de demande.";
+        setTimeout(() => window.location.href = "calendar.html", 1500);
     }
     
     msgContainer.appendChild(p);
