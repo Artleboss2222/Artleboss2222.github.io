@@ -214,3 +214,37 @@ document.addEventListener('DOMContentLoaded', () => {
         jumpToOriginalStart();
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const toiletButton = document.getElementById('toilet-button');
+    const optionsWindow = document.getElementById('chatbot-options');
+
+    // Ouvrir/Fermer le menu au clic sur la toilette
+    toiletButton.addEventListener('click', () => {
+        optionsWindow.classList.toggle('hidden');
+    });
+
+    // Fermer si on clique ailleurs sur la page
+    document.addEventListener('click', (event) => {
+        if (!document.getElementById('toilet-chatbot-container').contains(event.target)) {
+            optionsWindow.classList.add('hidden');
+        }
+    });
+});
+
+// Fonction pour gérer les choix
+function handleOption(type) {
+    switch(type) {
+        case 'urgence':
+            alert("Appelez immédiatement le 06 XX XX XX XX !");
+            break;
+        case 'devis':
+            window.location.href = "/page-devis.html"; // Redirection vers ton formulaire
+            break;
+        case 'rdv':
+            alert("Redirection vers le calendrier de réservation...");
+            break;
+        case 'contact':
+            alert("Laissez votre numéro, on vous rappelle !");
+            break;
+    }
+}
