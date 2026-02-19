@@ -183,13 +183,30 @@
         <span class="toilet-emoji">🚽</span>
     </div>
 
-    <div id="chatbot-options" class="hidden">
-        <h3>SOS Plombier 🛠️</h3>
-        <p>Comment puis-je vous aider ?</p>
-        <button onclick="handleOption('urgence')">🚨 Urgence (Fuite/Bouchon)</button>
-        <button onclick="handleOption('devis')">📋 Demander un devis</button>
-        <button onclick="handleOption('rdv')">📅 Prendre rendez-vous</button>
-        <button onclick="handleOption('contact')">📞 Être rappelé</button>
+<div id="toilet-chatbot-container">
+    <div id="chatbot-window" class="hidden">
+        <div id="chatbot-header">🔧 Assistant St-Mars</div>
+        <div id="chatbot-messages">
+            <p class="bot-msg">Bonjour ! Je suis l'assistant de Plomberie St-Mars. 🚽<br><br>Comment puis-je vous aider ?</p>
+            <div id="quick-options">
+                <button onclick="handleOption('Urgence 🚨')">🚨 Urgence</button>
+                <button onclick="handleOption('Devis 📋')">📋 Devis</button>
+                <button onclick="handleOption('RDV 📅')">📅 Prendre RDV</button>
+            </div>
+            
+            <div id="booking-container" class="hidden">
+                <p class="bot-msg">Veuillez choisir une date pour votre service au <strong>4712 Rue Saint-Ambroise</strong> :</p>
+                <input type="date" id="booking-date">
+                <button id="confirm-booking-btn" onclick="saveToDatabase()">Confirmer le rendez-vous</button>
+            </div>
+        </div>
+        <div id="chatbot-input-area">
+            <input type="text" id="user-input" placeholder="Écrivez votre message...">
+            <button id="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <div id="toilet-button">
+        <span class="toilet-emoji">🚽</span>
     </div>
 </div>
 <footer>
