@@ -1,17 +1,31 @@
-name: Discord Notification
+name: Discord Diff Bot
 on: [push]
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send Message
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get Diff
+        id: diff
+        run: |
+          # Cette commande récupère les lignes ajoutées/supprimées
+          DIFF=$(git diff HEAD~1 HEAD | head -c 1500) 
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$DIFF" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Send to Discord
         uses: appleboy/discord-action@master
         with:
           webhook_id: ${{ secrets.DISCORD_ID }}
           webhook_token: ${{ secrets.DISCORD_TOKEN }}
           message: |
-            **${{ github.actor }}** a push sur le repo !
-            📝 **Message:** ${{ github.event.head_commit.message }}
-            📂 **Fichiers modifiés:** ${{ join(github.event.head_commit.modified, ', ') }}
-            🔗 [Voir les changements](${{ github.event.head_commit.url }})
+            **${{ github.actor }}** a modifié des fichiers !
+            ```diff
+            ${{ steps.diff.outputs.content }}
+            ```
