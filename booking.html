@@ -229,12 +229,13 @@
 
             <span class="dlabel">Type de service</span>
             <div class="sgrid">
-                <div class="sc2" onclick="setSvc(this,&quot;Fuite d'eau&quot;)"><div class="ci"><i class="fa-solid fa-droplet"></i></div><div class="ct"><strong>Fuite d'eau</strong><span>Tuyaux, robinets, joints</span></div></div>
-                <div class="sc2" onclick="setSvc(this,'Refoulement')"><div class="ci"><i class="fa-solid fa-arrows-up-down"></i></div><div class="ct"><strong>Refoulement</strong><span>Égouts, drain, odeurs</span></div></div>
-                <div class="sc2" onclick="setSvc(this,'Gaz naturel')"><div class="ci"><i class="fa-solid fa-fire-flame-curved"></i></div><div class="ct"><strong>Gaz naturel</strong><span>Installation, inspection</span></div></div>
-                <div class="sc2" onclick="setSvc(this,'Rénovation')"><div class="ci"><i class="fa-solid fa-wrench"></i></div><div class="ct"><strong>Rénovation</strong><span>Salle de bain, cuisine</span></div></div>
-                <div class="sc2" onclick="setSvc(this,'Chauffe-eau')"><div class="ci"><i class="fa-solid fa-temperature-high"></i></div><div class="ct"><strong>Chauffe-eau</strong><span>Remplacement, réparation</span></div></div>
-                <div class="sc2" onclick="setSvc(this,'Autre')"><div class="ci"><i class="fa-solid fa-circle-question"></i></div><div class="ct"><strong>Autre</strong><span>Je décris ci-dessous</span></div></div>
+                <!-- FIX: Remplacé &quot; par des apostrophes simples dans tous les onclick -->
+                <div class="sc2" onclick="setSvc(this, 'Fuite d\'eau')"><div class="ci"><i class="fa-solid fa-droplet"></i></div><div class="ct"><strong>Fuite d'eau</strong><span>Tuyaux, robinets, joints</span></div></div>
+                <div class="sc2" onclick="setSvc(this, 'Refoulement')"><div class="ci"><i class="fa-solid fa-arrows-up-down"></i></div><div class="ct"><strong>Refoulement</strong><span>Égouts, drain, odeurs</span></div></div>
+                <div class="sc2" onclick="setSvc(this, 'Gaz naturel')"><div class="ci"><i class="fa-solid fa-fire-flame-curved"></i></div><div class="ct"><strong>Gaz naturel</strong><span>Installation, inspection</span></div></div>
+                <div class="sc2" onclick="setSvc(this, 'Rénovation')"><div class="ci"><i class="fa-solid fa-wrench"></i></div><div class="ct"><strong>Rénovation</strong><span>Salle de bain, cuisine</span></div></div>
+                <div class="sc2" onclick="setSvc(this, 'Chauffe-eau')"><div class="ci"><i class="fa-solid fa-temperature-high"></i></div><div class="ct"><strong>Chauffe-eau</strong><span>Remplacement, réparation</span></div></div>
+                <div class="sc2" onclick="setSvc(this, 'Autre')"><div class="ci"><i class="fa-solid fa-circle-question"></i></div><div class="ct"><strong>Autre</strong><span>Je décris ci-dessous</span></div></div>
             </div>
 
             <div class="fg full" style="margin-top:16px">
@@ -356,7 +357,6 @@
     const app = initializeApp(firebaseConfig);
     const db  = getDatabase(app);
 
-    // Exposé globalement pour submitForm()
     window._fbPush = async (data) => {
         const r = await push(ref(db, "demandes"), data);
         return r.key;
@@ -368,7 +368,7 @@
     let urgVal  = '';
     let svcVal  = '';
     let slotVal = '';
-    let photos  = [];   // base64 des photos
+    let photos  = [];
 
     // ── Entrée animée
     window.addEventListener('load', () => {
@@ -429,13 +429,11 @@
     // ── Navigation
     function goTo(from, to) {
         document.getElementById('st'+from).classList.remove('active');
-        // Marquer comme done
         const c = document.getElementById('sc'+from);
         c.innerHTML = '<i class="fa-solid fa-check" style="font-size:.7rem"></i>';
         c.className = 'sc done';
         document.getElementById('ps'+from).className = 'ps done';
         if (document.getElementById('ln'+from)) document.getElementById('ln'+from).classList.add('done');
-        // Activer suivant
         document.getElementById('sc'+to).className = 'sc active';
         document.getElementById('ps'+to).className = 'ps active';
         if (to === 4) fillSummary();
@@ -446,13 +444,11 @@
 
     function goBack(from, to) {
         document.getElementById('st'+from).classList.remove('active');
-        // Remettre "from" en non-done
         const c = document.getElementById('sc'+from);
         c.innerHTML = from;
         c.className = 'sc';
         document.getElementById('ps'+from).className = 'ps';
         if (document.getElementById('ln'+to)) document.getElementById('ln'+to).classList.remove('done');
-        // Activer précédent
         const cp = document.getElementById('sc'+to);
         cp.innerHTML = to;
         cp.className = 'sc active';
@@ -463,7 +459,6 @@
     }
 
     function nextStep(n) {
-        // Validation
         if (n===1) {
             if (!v('prenom') || !v('telephone') || !v('adresse')) { shake(); return; }
         }
@@ -496,13 +491,11 @@
         document.getElementById('r-slot').textContent   = slotVal || '—';
         document.getElementById('r-acces').textContent  = v('acces') || '—';
 
-        // Urgence badge
         const ru = document.getElementById('r-urg');
         if (urgVal==='urgence') ru.innerHTML = '<span class="badge r"><i class="fa-solid fa-triangle-exclamation"></i> Urgence</span>';
         else if (urgVal==='normal') ru.innerHTML = '<span class="badge b"><i class="fa-solid fa-calendar-check"></i> Planifié</span>';
         else ru.textContent = '—';
 
-        // Date formatée
         const dp = v('datepref');
         if (dp) {
             const d = new Date(dp+'T12:00:00');
@@ -529,29 +522,24 @@
         }
 
         const payload = {
-            // Coordonnées
             prenom:    v('prenom'),
             nom:       v('nom'),
             telephone: v('telephone'),
             email:     v('email'),
             adresse:   adresseFull,
-            // Problème
             urgence:      urgVal || 'non-specifie',
             typeService:  svcVal || 'non-specifie',
             description:  v('desc'),
             nbPhotos:     photos.length,
-            // Disponibilité
             datePreferee: dateFmt,
             plageHoraire: slotVal || 'non-specifie',
             notesAcces:   v('acces') || '',
-            // Méta
             status:       'nouveau',
             createdAt:    new Date().toISOString(),
             source:       'booking.html'
         };
 
         try {
-            // Attendre que Firebase soit chargé (module async)
             let tries = 0;
             while (!window._fbPush && tries < 30) {
                 await new Promise(r => setTimeout(r, 100));
@@ -561,7 +549,6 @@
 
             const key = await window._fbPush(payload);
 
-            // Succès
             document.getElementById('st4').classList.remove('active');
             document.getElementById('prog').style.display = 'none';
             const succ = document.getElementById('succ');
