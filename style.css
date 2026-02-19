@@ -12,19 +12,21 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    outline: none;
 }
 
-html {
-    scroll-behavior: smooth;
-    background: var(--bg-body);
-}
-
+/* FIX FOOTER : Body en flex pour pousser le footer en bas */
 body {
     font-family: 'Inter', sans-serif;
     color: var(--text-main);
+    background: var(--bg-body);
     line-height: 1.6;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#main-content {
+    flex: 1; /* Prend tout l'espace restant pour pousser le footer */
 }
 
 h1, h2, h3, .logo {
@@ -39,7 +41,7 @@ h1, h2, h3, .logo {
     width: 100%;
     z-index: 1000;
     padding: 1.5rem 0;
-    transition: background 0.4s var(--transition), backdrop-filter 0.4s var(--transition);
+    transition: 0.4s var(--transition);
 }
 
 .nav-scrolled {
@@ -61,7 +63,6 @@ h1, h2, h3, .logo {
 .logo {
     font-size: 1.5rem;
     font-weight: 800;
-    letter-spacing: -1px;
     text-decoration: none;
     color: var(--text-main);
 }
@@ -77,10 +78,7 @@ h1, h2, h3, .logo {
     color: rgba(255, 255, 255, 0.6);
     font-size: 0.9rem;
     font-weight: 600;
-    transition: color 0.3s;
 }
-
-.nav-links a:hover { color: var(--text-main); }
 
 .btn-cta {
     background: var(--accent-blue);
@@ -89,8 +87,6 @@ h1, h2, h3, .logo {
     border-radius: 4px;
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.85rem;
-    display: inline-block;
 }
 
 /* ─── Hero ─── */
@@ -101,61 +97,17 @@ h1, h2, h3, .logo {
     justify-content: center;
     text-align: center;
     padding: 0 5%;
-    background: radial-gradient(circle at 50% 50%, #111 0%, #050505 100%);
 }
 
-.hero h1 {
-    font-size: clamp(3rem, 10vw, 8rem);
-    line-height: 0.9;
-    margin-bottom: 2rem;
-}
-
+.hero h1 { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.9; margin-bottom: 2rem; }
 .hero h1 span { color: var(--accent-blue); }
 
-.hero p {
-    font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.7);
-    max-width: 600px;
-    margin: 0 auto 2.5rem;
-}
-
 .btn-primary {
-    background: transparent;
     border: 1px solid var(--accent-blue);
     color: var(--text-main);
     padding: 1.2rem 2.5rem;
     text-decoration: none;
     font-weight: 800;
-    letter-spacing: 1px;
-    transition: all 0.3s;
-}
-
-.btn-primary:hover {
-    background: var(--accent-blue);
-    box-shadow: 0 0 30px rgba(0, 85, 255, 0.4);
-}
-
-.hero-btns {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.btn-secondary {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.7);
-    padding: 1.2rem 2.5rem;
-    text-decoration: none;
-    font-weight: 600;
-    letter-spacing: 1px;
-    transition: all 0.3s;
-}
-
-.btn-secondary:hover {
-    border-color: rgba(255,255,255,0.5);
-    color: var(--text-main);
 }
 
 /* ─── Stats ─── */
@@ -164,330 +116,74 @@ h1, h2, h3, .logo {
     justify-content: space-around;
     padding: 4rem 5%;
     background: var(--surface);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.stat-item { text-align: center; }
+.stat-num { display: block; font-family: 'Syne'; font-size: 3rem; font-weight: 800; }
 
-.stat-num {
-    display: block;
-    font-family: 'Syne', sans-serif;
-    font-size: 3rem;
-    font-weight: 800;
-}
+/* ─── Services ─── */
+.services { padding: 8rem 5%; max-width: 1400px; margin: 0 auto; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.service-card { background: var(--surface); border-radius: 16px; padding: 3rem; }
 
-.stat-label {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: rgba(255, 255, 255, 0.5);
-}
+/* ─── Testimonials ─── */
+.testimonials-section { padding: 120px 0; }
+.carousel-wrapper { overflow: hidden; width: 100%; position: relative; }
+.bento-track { display: flex; gap: 24px; padding: 20px; }
+.bento-item { flex-shrink: 0; width: 420px; border-radius: 24px; background: rgba(255,255,255,0.03); padding: 40px; }
 
-/* ─── Services : 3 cartes égales sur une ligne ─── */
-.services {
-    padding: 8rem 5%;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.section-header {
-    margin-bottom: 3rem;
-}
-
-.section-header h2 {
-    font-size: 2.5rem;
-    font-weight: 800;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-}
-
-.service-card {
-    background: var(--surface);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    padding: 3rem 2.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    transition: border-color 0.3s, transform 0.3s;
-}
-
-.service-card:hover {
-    border-color: rgba(0, 85, 255, 0.4);
-    transform: translateY(-4px);
-}
-
-.service-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
-    background: rgba(0, 85, 255, 0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    color: var(--accent-blue);
-}
-
-.service-card h3 {
-    font-size: 1.3rem;
-    font-weight: 800;
-}
-
-.service-card p {
-    color: rgba(255, 255, 255, 0.55);
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-/* ─── Testimonials Section ─── */
-.testimonials-section {
-    padding: 120px 0;
-    background: var(--bg-body);
-}
-
-.container {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 40px;
-    width: 100%;
-}
-
-.header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
-    margin-bottom: 60px;
-}
-
-.title {
-    font-size: 4rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    max-width: 500px;
-    line-height: 1.1;
-}
-
-.title span {
-    color: rgba(255, 255, 255, 0.35);
-}
-
-/* ─── Carrousel infini ─── */
-.carousel-wrapper {
-    position: relative;
-    width: 100vw;
-    left: 50%;
-    margin-left: -50vw;
-    overflow: hidden;
-    padding: 20px 0;
-}
-
-.bento-track {
-    display: flex;
-    gap: 24px;
-    padding-left: 40px;
-    will-change: transform;
-    /* La largeur est calculée dynamiquement par JS après clonage */
-}
-
-/* ─── Cartes du carrousel : toutes identiques ─── */
-.bento-item {
-    flex-shrink: 0;
-    width: 420px;
-    height: 280px;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.03);
-    padding: 36px 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: border-color 0.3s, background 0.3s;
-    position: relative;
-    overflow: hidden;
-}
-
-.bento-item:hover {
-    border-color: rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.bento-item .content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: space-between;
-}
-
-.rating {
-    color: var(--accent-gold);
-    font-size: 0.85rem;
-    margin-bottom: 12px;
-    letter-spacing: 2px;
-}
-
-.bento-item p {
-    font-size: 1.05rem;
-    line-height: 1.6;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.85);
-    flex: 1;
-}
-
-.user {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 20px;
-}
-
+/* FIX AVATAR PHOTO */
 .avatar {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #0055ff44, #0055ff22);
-    border: 1px solid rgba(0, 85, 255, 0.3);
-    flex-shrink: 0;
-}
-
-.info .name {
-    display: block;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--text-main);
-}
-
-.info .role {
-    display: block;
-    font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.4);
-}
-
-/* ─── Flèches sous le carrousel ─── */
-.nav-controls {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 40px;
-}
-
-.nav-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-}
-
-.nav-btn:hover {
-    background: white;
-    color: black;
-    transform: scale(1.05);
-}
-
-/* ─── Location / Contact ─── */
-.map-placeholder {
-    height: 500px;
-    background: #111 url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&q=80&w=2000') center/cover;
-    filter: grayscale(1) brightness(0.4);
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.map-overlay {
-    background: var(--bg-body);
-    padding: 3rem;
+    overflow: hidden; /* Important pour garder l'image ronde */
+    background: var(--surface-light);
     border: 1px solid var(--accent-blue);
-    text-align: center;
 }
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Important pour ne pas écraser la photo */
+}
+
+/* ─── Chatbot ─── */
+#toilet-chatbot-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
+#toilet-button { 
+    width: 60px; height: 60px; background: white; border-radius: 50%; 
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3); font-size: 30px;
+}
+
+#chatbot-window {
+    position: absolute; bottom: 80px; right: 0; width: 300px;
+    background: white; color: black; border-radius: 15px; overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+#chatbot-header { background: var(--accent-blue); color: white; padding: 15px; font-weight: bold; }
+#chatbot-messages { padding: 15px; max-height: 300px; overflow-y: auto; }
+#quick-options button { width: 100%; margin-top: 5px; padding: 8px; cursor: pointer; border-radius: 5px; border: 1px solid #ddd; }
+
+.hidden { display: none !important; }
 
 /* ─── Footer ─── */
 footer {
-    padding: 4rem 5%;
+    padding: 3rem 5%;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--bg-body);
 }
 
 .footer-content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.4);
+    max-width: 1400px;
+    margin: 0 auto;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.9rem;
 }
 
-.footer-links a {
-    color: inherit;
-    text-decoration: none;
-    margin-left: 2rem;
-}
-
-/* ─── Responsive ─── */
 @media (max-width: 992px) {
-    .nav-links, .btn-cta.magnetic { display: none; }
     .services-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 4rem; }
-    .stats-banner { flex-direction: column; gap: 3rem; }
-    .title { font-size: 2.5rem; }
-    .bento-item { width: 300px; height: 260px; }
-}
-/* Conteneur principal */
-#toilet-chatbot-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-    font-family: Arial, sans-serif;
-/* Animation de base pour l'entrée */
-#chatbot-window {
-    transform-origin: bottom right;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* ... reste de tes styles précédents ... */
-}
-
-#booking-container {
-    background: #f0f7ff;
-    padding: 10px;
-    border-radius: 10px;
-    margin-top: 10px;
-    border: 1px dashed #007bff;
-}
-
-#booking-date {
-    width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-    border: 1px solid #007bff;
-    border-radius: 5px;
-}
-
-#confirm-booking-btn {
-    width: 100%;
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-
-
-/* Classe pour cacher/montrer */
-.hidden {
-    display: none !important;
+    .nav-links { display: none; }
 }
