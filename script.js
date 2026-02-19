@@ -1,45 +1,26 @@
-gsap.registerPlugin(ScrollTrigger);
-
 document.addEventListener('DOMContentLoaded', () => {
-
-    // 1. Mise à jour de l'année
+    // Mise à jour de l'année
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // 2. Animations Hero
-    const heroTl = gsap.timeline();
-    heroTl.from(".reveal-text", { y: 100, opacity: 0, duration: 1.2, ease: "power4.out" })
-          .from(".reveal-sub", { y: 30, opacity: 0, duration: 1 }, "-=0.8");
-
-    // 3. Navbar change au scroll
+    // Effet de la Navbar au scroll
     window.addEventListener('scroll', () => {
         document.querySelector('.navbar').classList.toggle('nav-scrolled', window.scrollY > 50);
     });
 
-    // 4. Chatbot Toggle (Correction ID)
-    const toiletButton = document.getElementById('toilet-button');
-    const chatbotWindow = document.getElementById('chatbot-window');
-
-    if (toiletButton && chatbotWindow) {
-        toiletButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            chatbotWindow.classList.toggle('hidden');
-        });
+    // Toggle du Chatbot
+    const btn = document.getElementById('toilet-button');
+    const win = document.getElementById('chatbot-window');
+    if (btn && win) {
+        btn.addEventListener('click', () => win.classList.toggle('hidden'));
     }
 
-    // Fermer le chatbot si clic extérieur
-    document.addEventListener('click', (e) => {
-        if (chatbotWindow && !chatbotWindow.contains(e.target) && !toiletButton.contains(e.target)) {
-            chatbotWindow.classList.add('hidden');
-        }
-    });
-
-    // 5. Compteurs Stats
+    // Compteurs de statistiques avec GSAP et ScrollTrigger
     document.querySelectorAll('.stat-num').forEach(num => {
         const target = +num.getAttribute('data-target');
         if (target) {
             ScrollTrigger.create({
-                trigger: num,
+                trigger: num, 
                 start: "top 90%",
                 onEnter: () => {
                     let obj = { val: 0 };
@@ -52,48 +33,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 6. Carrousel
+    // Logique du Carrousel
     const track = document.getElementById('bento-track');
-    const btnNext = document.querySelector('.nav-btn.next');
-    const btnPrev = document.querySelector('.nav-btn.prev');
+    const btnNext = document.querySelector('.next');
+    const btnPrev = document.querySelector('.prev');
+    let offset = 0;
 
     if (track && btnNext && btnPrev) {
-        const getCardWidth = () => track.children[0].offsetWidth + 24;
-        
         btnNext.addEventListener('click', () => {
-            gsap.to(track, { x: `-=${getCardWidth()}`, duration: 0.5, ease: "power2.out" });
+            offset -= 474; // Largeur de la carte + gap
+            // Réinitialisation si on arrive au bout (exemple simple)
+            if (offset < -474) offset = 0;
+            track.style.transform = `translateX(${offset}px)`;
         });
 
         btnPrev.addEventListener('click', () => {
-            gsap.to(track, { x: `+=${getCardWidth()}`, duration: 0.5, ease: "power2.out" });
+            offset += 474;
+            if (offset > 0) offset = -474;
+            track.style.transform = `translateX(${offset}px)`;
         });
     }
 });
 
-// Fonctions globales pour le chatbot
+/**
+ * Gère les options rapides du chatbot
+ * @param {string} type - Le type d'option sélectionnée
+ */
 function handleOption(type) {
-    const messages = document.getElementById('chatbot-messages');
-    let response = "";
-
-    switch(type) {
-        case 'urgence':
-            response = "🚨 Appelez immédiatement le <strong>(514) 933-8411</strong>.";
-            break;
-        case 'devis':
-            response = "📋 Redirection vers le formulaire de devis...";
-            setTimeout(() => window.location.href = "booking.html", 1500);
-            break;
-        case 'rdv':
-            response = "📅 Nous vérifions nos disponibilités...";
-            break;
-    }
-
+    const msgContainer = document.getElementById('chatbot-messages');
     const p = document.createElement('p');
-    p.className = "bot-msg";
-    p.style.marginTop = "10px";
+    p.style.marginTop = "15px";
+    p.style.color = "#0055ff";
+    p.style.background = "rgba(0, 85, 255, 0.1)";
     p.style.padding = "10px";
-    p.style.background = "#f0f0f0";
-    p.style.borderRadius = "5px";
-    p.innerHTML = response;
-    messages.appendChild(p);
+    p.style.borderRadius = "8px";
+    
+    if (type === 'urgence') {
+        p.innerHTML = "Appelez immédiatement le <strong>(514) 933-8411</strong>.";
+    } else if (type === 'devis') {
+        p.innerHTML = "Nous vous redirigeons vers le formulaire de devis...";
+        setTimeout(() => window.location.href = "booking.html", 1500);
+    } else {
+        p.innerHTML = "Traitement de votre demande de rendez-vous...";
+    }
+    
+    msgContainer.appendChild(p);
+    msgContainer.scrollTop = msgContainer.scrollHeight;
 }
