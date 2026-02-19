@@ -27,58 +27,56 @@
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="reveal-text">Plomberie <span>Saint Mars</span></h1>
-            <p class="reveal-sub">Expertise 4.8 Étoiles à Montréal — Précision & Propreté.</p>
-            <div class="hero-btns reveal-btn">
-                <a href="tel:5149338411" class="btn-primary">(514) 933-8411</a>
-                <a href="booking.html" class="btn-secondary">Faire une demande</a>
-            </div>
-        </div>
-    </section>
-
-    <div class="stats-banner">
-        <div class="stat-item">
-            <span class="stat-num" data-target="37">37</span>
-            <span class="stat-label">Avis Google</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-num">4.8</span>
-            <span class="stat-label">Note Globale</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-num" data-target="100">100</span>
-            <span class="stat-label">% Ponctualité</span>
-        </div>
-    </div>
-
-    <!-- SERVICES : 3 cartes égales sur une seule ligne -->
-    <section id="services" class="services">
-        <div class="section-header">
-            <h2>Nos Services</h2>
-        </div>
-        <div class="services-grid">
-            <div class="service-card animate-card">
-                <div class="service-icon"><i class="fa-solid fa-bell-concierge"></i></div>
-                <h3>Urgence 24/7</h3>
-                <p>Intervention rapide pour fuites et refoulements.</p>
-            </div>
-            <div class="service-card animate-card">
-                <div class="service-icon"><i class="fa-solid fa-house"></i></div>
-                <h3>Résidentiel</h3>
-                <p>Rénovation et entretien complet.</p>
-            </div>
-            <div class="service-card animate-card">
-                <div class="service-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
-                <h3>Gaz Naturel</h3>
-                <p>Certification CMMTQ pour installations sécurisées.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- TÉMOIGNAGES : carrousel infini, cartes uniformes -->
     <main id="main-content">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="reveal-text">Plomberie <span>Saint Mars</span></h1>
+                <p class="reveal-sub">Expertise 4.8 Étoiles à Montréal — Précision & Propreté.</p>
+                <div class="hero-btns reveal-btn">
+                    <a href="tel:5149338411" class="btn-primary">(514) 933-8411</a>
+                    <a href="booking.html" class="btn-secondary">Faire une demande</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="stats-banner">
+            <div class="stat-item">
+                <span class="stat-num" data-target="37">0</span>
+                <span class="stat-label">Avis Google</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">4.8</span>
+                <span class="stat-label">Note Globale</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num" data-target="100">0</span>
+                <span class="stat-label">% Ponctualité</span>
+            </div>
+        </div>
+
+        <section id="services" class="services">
+            <div class="section-header">
+                <h2>Nos Services</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card animate-card">
+                    <div class="service-icon"><i class="fa-solid fa-bell-concierge"></i></div>
+                    <h3>Urgence 24/7</h3>
+                    <p>Intervention rapide pour fuites et refoulements.</p>
+                </div>
+                <div class="service-card animate-card">
+                    <div class="service-icon"><i class="fa-solid fa-house"></i></div>
+                    <h3>Résidentiel</h3>
+                    <p>Rénovation et entretien complet.</p>
+                </div>
+                <div class="service-card animate-card">
+                    <div class="service-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                    <h3>Gaz Naturel</h3>
+                    <p>Certification CMMTQ pour installations sécurisées.</p>
+                </div>
+            </div>
+        </section>
+
         <section id="avis" class="testimonials-section">
             <div class="container">
                 <div class="header">
@@ -87,12 +85,15 @@
 
                 <div class="carousel-wrapper">
                     <div class="bento-track" id="bento-track">
+                        <!-- Avis 1 avec Photo -->
                         <div class="bento-item">
                             <div class="content">
                                 <div class="rating">★★★★★</div>
-                                <p>"Ils font preuve de compétences et de ponctualité,avec des prix justes! Recommandé à 100%"</p>
+                                <p>"Ils font preuve de compétences et de ponctualité, avec des prix justes! Recommandé à 100%"</p>
                                 <div class="user">
-                                    <div class="avatar"><img src="IMG_2554.png" alt="Sanie Varela PFP" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+                                    <div class="avatar">
+                                        <img src="IMG_2554.png" alt="Sanie Varela">
+                                    </div>
                                     <div class="info">
                                         <span class="name">Sanie Varela</span>
                                         <span class="role">Client résidentiel</span>
@@ -100,6 +101,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Autres Avis -->
                         <div class="bento-item">
                             <div class="content">
                                 <div class="rating">★★★★★</div>
@@ -126,90 +128,50 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bento-item">
-                            <div class="content">
-                                <div class="rating">★★★★★</div>
-                                <p>"Très satisfait de la rénovation complète de ma salle de bain. Propres et efficaces."</p>
-                                <div class="user">
-                                    <div class="avatar"></div>
-                                    <div class="info">
-                                        <span class="name">Antoine Leblanc</span>
-                                        <span class="role">Client</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bento-item">
-                            <div class="content">
-                                <div class="rating">★★★★★</div>
-                                <p>"Disponibles 24h/7, ils ont résolu mon problème de refoulement en moins d'une heure."</p>
-                                <div class="user">
-                                    <div class="avatar"></div>
-                                    <div class="info">
-                                        <span class="name">Thomas Roche</span>
-                                        <span class="role">Client fidèle</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <!-- Flèches sous le carrousel -->
                 <div class="nav-controls">
-                    <button class="nav-btn prev" aria-label="Précédent">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <button class="nav-btn next" aria-label="Suivant">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
+                    <button class="nav-btn prev"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="nav-btn next"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="location">
+            <div class="location-grid">
+                <div class="map-placeholder animate-fade">
+                    <div class="map-overlay">
+                        <p>5000 Av. Gilmore, Montréal, QC H4E 4N3</p>
+                        <p>Ouvert jusqu'à 17:00</p>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <section id="contact" class="location">
-        <div class="location-grid">
-            <div class="map-placeholder animate-fade">
-                <div class="map-overlay">
-                    <p>5000 Av. Gilmore, Montréal, QC H4E 4N3</p>
-                    <p>Ouvert jusqu'à 17:00</p>
+    <div id="toilet-chatbot-container">
+        <div id="chatbot-window" class="hidden">
+            <div id="chatbot-header">🔧 Assistant St-Mars</div>
+            <div id="chatbot-messages">
+                <p class="bot-msg">Bonjour ! Je suis l'assistant de Plomberie St-Mars. 🚽<br><br>Comment puis-je vous aider ?</p>
+                <div id="quick-options">
+                    <button onclick="handleOption('urgence')">🚨 Urgence</button>
+                    <button onclick="handleOption('devis')">📋 Devis</button>
+                    <button onclick="handleOption('rdv')">📅 Prendre RDV</button>
                 </div>
             </div>
+            <div id="chatbot-input-area">
+                <input type="text" id="user-input" placeholder="Écrivez votre message...">
+                <button id="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
         </div>
-    </section>
-    <div id="toilet-chatbot-container">
-    <div id="toilet-button" title="Besoin d'aide ?">
-        <span class="toilet-emoji">🚽</span>
+        <div id="toilet-button" title="Besoin d'aide ?">
+            <span class="toilet-emoji">🚽</span>
+        </div>
     </div>
 
-<div id="toilet-chatbot-container">
-    <div id="chatbot-window" class="hidden">
-        <div id="chatbot-header">🔧 Assistant St-Mars</div>
-        <div id="chatbot-messages">
-            <p class="bot-msg">Bonjour ! Je suis l'assistant de Plomberie St-Mars. 🚽<br><br>Comment puis-je vous aider ?</p>
-            <div id="quick-options">
-                <button onclick="handleOption('Urgence 🚨')">🚨 Urgence</button>
-                <button onclick="handleOption('Devis 📋')">📋 Devis</button>
-                <button onclick="handleOption('RDV 📅')">📅 Prendre RDV</button>
-            </div>
-            
-            <div id="booking-container" class="hidden">
-                <p class="bot-msg">Veuillez choisir une date pour votre service au <strong>4712 Rue Saint-Ambroise</strong> :</p>
-                <input type="date" id="booking-date">
-                <button id="confirm-booking-btn" onclick="saveToDatabase()">Confirmer le rendez-vous</button>
-            </div>
-        </div>
-        <div id="chatbot-input-area">
-            <input type="text" id="user-input" placeholder="Écrivez votre message...">
-            <button id="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
-        </div>
-    </div>
-    <div id="toilet-button">
-        <span class="toilet-emoji">🚽</span>
-    </div>
-</div>
-<footer>
+    <footer>
         <div class="footer-content">
             <p>&copy; <span id="year"></span> Plomberie St-Mars Inc. Tous droits réservés.</p>
             <div class="footer-links">
@@ -222,5 +184,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
