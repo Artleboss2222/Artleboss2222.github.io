@@ -235,10 +235,10 @@ document.addEventListener('DOMContentLoaded', () => {
 function handleOption(type) {
     switch(type) {
         case 'urgence':
-            alert("Appelez immédiatement le 06 XX XX XX XX !");
+            alert("Appelez immédiatement le  (514) 933-8411!");
             break;
         case 'devis':
-            window.location.href = "/page-devis.html"; // Redirection vers ton formulaire
+            window.location.href = "/booking.html"; // Redirection vers ton formulaire
             break;
         case 'rdv':
             alert("Redirection vers le calendrier de réservation...");
