@@ -104,7 +104,7 @@ function handleOption(type) {
         p.innerHTML = "📋 <strong>Devis :</strong> Un instant, nous vous redirigeons vers notre formulaire en ligne...";
         setTimeout(() => window.location.href = "booking.html", 1500);
     } else {
-        p.innerHTML = "📅 <strong>RDV :</strong> Quel moment vous conviendrait le mieux ? Appelez-nous ou remplissez le formulaire de demande.";
+        p.innerHTML = "📅 <strong>RDV :</strong> Un instant, nous vous redirigeons vers notre calendrier de disponibilité en ligne...";
         setTimeout(() => window.location.href = "calendar.html", 1500);
     }
     
