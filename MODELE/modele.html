@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaPro | Plomberie d'Excellence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+        :root {
+            --primary: #0EA5E9;
+            --secondary: #0F172A;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            scroll-behavior: smooth;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        /* Carousel Styles */
+        #carousel-container {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .testimonial-slide {
+            flex: 0 0 100%;
+            padding: 0 1rem;
+        }
+
+        @media (min-width: 768px) { .testimonial-slide { flex: 0 0 50%; } }
+        @media (min-width: 1024px) { .testimonial-slide { flex: 0 0 33.333%; } }
+
+        /* Modal Animation */
+        .modal-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Language Switcher */
+        .lang-switch-btn {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+        .lang-switch-btn.active {
+            background: #0EA5E9;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Modal Formulaire Devis -->
+    <div id="modal-devis" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="modal-content w-full max-w-xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+            <div class="relative bg-blue-600 p-8 text-white">
+                <button onclick="closeModal()" class="absolute top-6 right-6 text-white/80 hover:text-white transition">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <h3 class="text-2xl font-bold" data-i18n="modal_title">Demander un devis</h3>
+                <p class="text-blue-100 text-sm mt-2" data-i18n="modal_subtitle">Expliquez-nous votre besoin, nous vous répondons rapidement.</p>
+            </div>
+            <form class="p-8 space-y-4" onsubmit="handleFormSubmit(event)">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase" data-i18n="label_name">Nom Complet</label>
+                        <input type="text" id="form-name" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase" data-i18n="label_phone">Téléphone</label>
+                        <input type="tel" id="form-phone" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-500 uppercase" data-i18n="label_type">Type d'intervention</label>
+                    <select class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition">
+                        <option data-i18n="opt_1">Dépannage Urgence</option>
+                        <option data-i18n="opt_2">Rénovation Salle de Bain</option>
+                        <option data-i18n="opt_3">Entretien Chaudière</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transition" data-i18n="btn_submit">
+                    Envoyer ma demande
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-card bg-white/70">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-blue-600 p-2 rounded-lg text-white"><i class="fas fa-faucet-drip text-xl"></i></div>
+                <span class="text-2xl font-extrabold text-slate-900">AQUA<span class="text-blue-600">PRO</span></span>
+            </div>
+            
+            <div class="hidden md:flex gap-8 items-center font-semibold text-slate-600">
+                <a href="#services" data-i18n="nav_services">Services</a>
+                <a href="#avis" data-i18n="nav_testimonials">Témoignages</a>
+                
+                <!-- Language Toggle Button -->
+                <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200 ml-4">
+                    <button onclick="setLanguage('fr')" id="btn-fr" class="lang-switch-btn active">FR</button>
+                    <button onclick="setLanguage('en')" id="btn-en" class="lang-switch-btn">EN</button>
+                </div>
+
+                <a href="tel:+33123456789" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                    <i class="fas fa-phone-alt mr-2"></i> <span data-i18n="nav_call">Urgence 24/7</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative min-h-screen bg-slate-900 flex items-center pt-20">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 z-10">
+            <div class="text-white space-y-8">
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+                    <span data-i18n="hero_t1">L'Art de la Plomberie</span> <br>
+                    <span class="text-blue-400" data-i18n="hero_t2">Sans Compromis</span>
+                </h1>
+                <p class="text-lg text-slate-400 max-w-lg" data-i18n="hero_desc">
+                    Expertise technique inégalée pour votre confort quotidien depuis plus de 15 ans.
+                </p>
+                <button onclick="openModal()" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold transition flex items-center gap-3">
+                    <span data-i18n="hero_btn">Demander un devis gratuit</span> <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-24 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-extrabold text-slate-900" data-i18n="serv_title">Nos Services</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="glass-card p-10 rounded-3xl">
+                <div class="text-3xl text-blue-600 mb-6"><i class="fas fa-tools"></i></div>
+                <h3 class="text-xl font-bold mb-4" data-i18n="s1_t">Dépannage</h3>
+                <p class="text-slate-600" data-i18n="s1_d">Intervention rapide pour toutes vos urgences de plomberie.</p>
+            </div>
+            <div class="glass-card p-10 rounded-3xl">
+                <div class="text-3xl text-blue-600 mb-6"><i class="fas fa-bath"></i></div>
+                <h3 class="text-xl font-bold mb-4" data-i18n="s2_t">Rénovation</h3>
+                <p class="text-slate-600" data-i18n="s2_d">Installation et modernisation de vos salles de bain.</p>
+            </div>
+            <div class="glass-card p-10 rounded-3xl">
+                <div class="text-3xl text-blue-600 mb-6"><i class="fas fa-fire"></i></div>
+                <h3 class="text-xl font-bold mb-4" data-i18n="s3_t">Chauffage</h3>
+                <p class="text-slate-600" data-i18n="s3_d">Entretien et pose de systèmes de chauffage performants.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carousel Témoignages -->
+    <section id="avis" class="bg-slate-900 py-24 text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <h2 class="text-4xl font-bold" data-i18n="test_title">Témoignages</h2>
+                <div class="flex gap-3">
+                    <button onclick="prevSlide()" class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-white hover:text-slate-900 transition"><i class="fas fa-chevron-left"></i></button>
+                    <button onclick="nextSlide()" class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-white hover:text-slate-900 transition"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div class="relative overflow-hidden -mx-4">
+                <div id="carousel-container">
+                    <div class="testimonial-slide">
+                        <div class="bg-slate-800/50 p-8 rounded-3xl border border-slate-700">
+                            <p class="italic mb-6" data-i18n="q1">"Service impeccable, intervention en moins d'une heure pour ma fuite !"</p>
+                            <p class="font-bold">Jean M.</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="bg-slate-800/50 p-8 rounded-3xl border border-slate-700">
+                            <p class="italic mb-6" data-i18n="q2">"Plombier très propre et ponctuel. Ma nouvelle douche est superbe."</p>
+                            <p class="font-bold">Sarah K.</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="bg-slate-800/50 p-8 rounded-3xl border border-slate-700">
+                            <p class="italic mb-6" data-i18n="q3">"Excellent rapport qualité-prix pour le remplacement de ma chaudière."</p>
+                            <p class="font-bold">Marc L.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="bg-white py-12 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <p class="text-slate-500" data-i18n="footer_text">Besoin d'aide immédiate ?</p>
+            <button onclick="openModal()" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-xl transition" data-i18n="footer_btn">
+                C'est parti !
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            fr: {
+                modal_title: "Demander un devis",
+                modal_subtitle: "Expliquez-nous votre besoin, nous vous répondons rapidement.",
+                label_name: "Nom Complet",
+                label_phone: "Téléphone",
+                label_type: "Type d'intervention",
+                opt_1: "Dépannage Urgence",
+                opt_2: "Rénovation Salle de Bain",
+                opt_3: "Entretien Chaudière",
+                btn_submit: "Envoyer ma demande",
+                nav_services: "Services",
+                nav_testimonials: "Témoignages",
+                nav_call: "Urgence 24/7",
+                hero_t1: "L'Art de la Plomberie",
+                hero_t2: "Sans Compromis",
+                hero_desc: "Expertise technique inégalée pour votre confort quotidien depuis plus de 15 ans.",
+                hero_btn: "Demander un devis gratuit",
+                serv_title: "Nos Services",
+                s1_t: "Dépannage",
+                s1_d: "Intervention rapide pour toutes vos urgences de plomberie.",
+                s2_t: "Rénovation",
+                s2_d: "Installation et modernisation de vos salles de bain.",
+                s3_t: "Chauffage",
+                s3_d: "Entretien et pose de systèmes de chauffage performants.",
+                test_title: "Témoignages",
+                q1: '"Service impeccable, intervention en moins d\'une heure pour ma fuite !"',
+                q2: '"Plombier très propre et ponctuel. Ma nouvelle douche est superbe."',
+                q3: '"Excellent rapport qualité-prix pour le remplacement de ma chaudière."',
+                footer_text: "Besoin d'aide immédiate ?",
+                footer_btn: "C'est parti !",
+                msg_sent: "Demande envoyée !"
+            },
+            en: {
+                modal_title: "Request a Quote",
+                modal_subtitle: "Tell us about your needs, we will reply promptly.",
+                label_name: "Full Name",
+                label_phone: "Phone Number",
+                label_type: "Service Type",
+                opt_1: "Emergency Repair",
+                opt_2: "Bathroom Renovation",
+                opt_3: "Boiler Maintenance",
+                btn_submit: "Send Request",
+                nav_services: "Services",
+                nav_testimonials: "Testimonials",
+                nav_call: "24/7 Emergency",
+                hero_t1: "The Art of Plumbing",
+                hero_t2: "Without Compromise",
+                hero_desc: "Unmatched technical expertise for your daily comfort for over 15 years.",
+                hero_btn: "Get a Free Quote",
+                serv_title: "Our Services",
+                s1_t: "Repair",
+                s1_d: "Fast response for all your plumbing emergencies.",
+                s2_t: "Renovation",
+                s2_d: "Installation and modernization of your bathrooms.",
+                s3_t: "Heating",
+                s3_d: "Maintenance and installation of efficient heating systems.",
+                test_title: "Testimonials",
+                q1: '"Impeccable service, intervention in less than an hour for my leak!"',
+                q2: '"Very clean and punctual plumber. My new shower looks great."',
+                q3: '"Excellent value for money for my boiler replacement."',
+                footer_text: "Need immediate help?",
+                footer_btn: "Let's go!",
+                msg_sent: "Request sent!"
+            }
+        };
+
+        let currentLang = 'fr';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.innerText = translations[lang][key];
+            });
+
+            // UI update
+            document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        }
+
+        // Modal Logic
+        const modal = document.getElementById('modal-devis');
+        function openModal() { modal.classList.add('active'); }
+        function closeModal() { modal.classList.remove('active'); }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const msg = translations[currentLang].msg_sent;
+            const notification = document.createElement('div');
+            notification.className = "fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg z-[200]";
+            notification.innerText = msg;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+            closeModal();
+        }
+
+        // Carousel Logic
+        let currentIdx = 0;
+        const container = document.getElementById('carousel-container');
+        function updateCarousel() {
+            const slide = document.querySelector('.testimonial-slide');
+            container.style.transform = `translateX(-${currentIdx * slide.clientWidth}px)`;
+        }
+        function nextSlide() {
+            const visible = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1;
+            if (currentIdx < 3 - visible) currentIdx++; else currentIdx = 0;
+            updateCarousel();
+        }
+        function prevSlide() {
+            if (currentIdx > 0) currentIdx--; else currentIdx = 0;
+            updateCarousel();
+        }
+        window.addEventListener('resize', updateCarousel);
+    </script>
+</body>
+</html>
