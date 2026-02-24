@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUB PLOMBERIE | Choisissez votre style</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;700;900&family=Space+Grotesk:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Lexend+Deca:wght@800&family=Archivo+Black&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .hub-title {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -2px;
+        }
+
+        .preview-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 420px;
+        }
+
+        .preview-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        /* 1. Moderne Glassmorphism (Original) */
+        .style-modern {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 24px;
+        }
+
+        /* 2. Néo-Brutaliste */
+        .style-brutal {
+            background: #FFD600;
+            color: black;
+            border: 4px solid black;
+            box-shadow: 8px 8px 0px black;
+            font-family: 'Archivo Black', sans-serif;
+        }
+
+        /* 3. Dark Premium */
+        .style-dark {
+            background: #050505;
+            color: white;
+            border-radius: 20px;
+        }
+        .glow-accent {
+            color: #00F2FF;
+            text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+        }
+
+        /* 4. Zen Minimaliste */
+        .style-zen {
+            background: #F9F7F2;
+            color: #3F4238;
+            font-family: 'Cormorant Garamond', serif;
+            border-radius: 40px;
+        }
+
+        /* 5. Bauhaus */
+        .style-bauhaus {
+            background: white;
+            border: 4px solid black;
+            font-family: 'Lexend Deca', sans-serif;
+        }
+        .bauhaus-red { background: #D64545; }
+
+        /* 6. Pop Magazine */
+        .style-pop {
+            background: #FEF9E7;
+            font-family: 'DM Serif Display', serif;
+            border: 2px solid #2d2d2d;
+            box-shadow: 6px 6px 0px #2d2d2d;
+        }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- Header -->
+    <header class="py-16 px-6 text-center">
+        <h1 class="text-5xl md:text-7xl font-black hub-title mb-6 uppercase">Design <span class="text-blue-600">Plomberie</span></h1>
+        <p class="text-xl text-slate-500 max-w-2xl mx-auto">
+            Portail complet des 6 concepts visuels créés. Choisissez l'identité qui correspond le mieux à votre marque.
+        </p>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+        <!-- Carte 1: Moderne Glassmorphism -->
+        <div class="preview-card style-modern p-8">
+            <div>
+                <div class="flex items-center gap-2 mb-6">
+                    <i class="fas fa-circle text-blue-500"></i>
+                    <span class="text-xs tracking-widest uppercase font-bold text-blue-600">Concept 01</span>
+                </div>
+                <h2 class="text-3xl font-black mb-4 text-blue-900">Glassmorphism</h2>
+                <p class="text-blue-800/70 font-medium">
+                    Épuré, professionnel et rassurance. Utilise des flous de fond et des dégradés doux pour une image de confiance.
+                </p>
+            </div>
+            <div class="mt-8">
+                <a href="index.html" class="inline-block w-full text-center py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all">
+                    Voir la Démo
+                </a>
+            </div>
+        </div>
+
+        <!-- Carte 2: Néo-Brutaliste -->
+        <div class="preview-card style-brutal p-8">
+            <div>
+                <div class="flex items-center gap-2 mb-6">
+                    <span class="bg-black text-white px-2 py-1 text-[10px]">C02</span>
+                </div>
+                <h2 class="text-3xl uppercase mb-4">Brutalism</h2>
+                <p class="font-bold leading-tight">
+                    Couleurs vives, bordures épaisses et ombres dures. Une esthétique qui impose la force et l'efficacité immédiate.
+                </p>
+            </div>
+            <div class="mt-8">
+                <a href="neo_plumbing.html" class="inline-block w-full text-center py-4 bg-black text-white font-bold uppercase border-2 border-black hover:bg-white hover:text-black transition-all">
+                    Ouvrir le projet
+                </a>
+            </div>
+        </div>
+
+        <!-- Carte 3: Dark Premium -->
+        <div class="preview-card style-dark p-8">
+            <div>
+                <div class="flex items-center gap-2 mb-6 text-gray-400">
+                    <i class="fas fa-bolt glow-accent"></i>
+                    <span class="text-xs tracking-widest uppercase font-bold">Concept 03</span>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">Dark <span class="glow-accent">Elite</span></h2>
+                <p class="text-gray-400 font-light">
+                    Un univers nocturne avec des lueurs néons. Idéal pour une image de précision technologique.
+                </p>
+            </div>
+            <div class="mt-8">
+                <a href="dark_plumbing.html" class="inline-block w-full text-center py-4 border border-[#00F2FF] text-[#00F2FF] font-bold uppercase tracking-widest hover:bg-[#00F2FF] hover:text-black transition-all">
+                    Intervention
+                </a>
+            </div>
+        </div>
+
+        <!-- Carte 4: Zen Minimaliste -->
+        <div class="preview-card style-zen p-8">
+            <div>
+                <div class="flex items-center gap-2 mb-6 text-[#6B705C]">
+                    <span class="w-8 h-[1px] bg-[#6B705C]"></span>
+                    <span class="text-xs tracking-widest uppercase font-bold">Concept 04</span>
+                </div>
+                <h2 class="text-4xl italic mb-4">Aqua Zen</h2>
+                <p class="text-[#6B705C] text-lg">
+                    Sérénité, tons terreux et typographie serif. Pour une approche artisanale, calme et haut de gamme.
+                </p>
+            </div>
+            <div class="mt-8">
+                <a href="zen_plumbing.html" class="inline-block w-full text-center py-4 bg-[#6B705C] text-white rounded-full font-bold hover:bg-[#3F4238] transition-all">
+                    Découvrir
+                </a>
+            </div>
+        </div>
+
+        <!-- Carte 5: Bauhaus -->
+        <div class="preview-card style-bauhaus p-8">
+            <div>
+                <div class="flex justify-between items-start mb-6">
+                    <span class="font-black text-2xl">05.</span>
+                    <div class="w-8 h-8 bauhaus-red border-2 border-black"></div>
+                </div>
+                <h2 class="text-3xl font-black uppercase mb-4">Structure.</h2>
+                <p class="font-bold text-gray-600 leading-tight">
+                    Inspiré du design architectural. Formes géométriques primaires et fiabilité industrielle absolue.
+                </p>
+            </div>
+            <div class="mt-8">
+                <a href="bauhaus_plumbing.html" class="inline-block w-full text-center py-4 bg-black text-white font-black uppercase hover:bg-red-600 transition-all">
+                    Accéder
+                </a>
+            </div>
+        </div>
+
+        <!-- Carte 6: Pop Magazine -->
+        <div class="preview-card style-pop p-8">
+            <div>
+                <div class="mb-6">
+                    <span class="bg-pink-300 border-2 border-black px-4 py-1 rounded-lg text-[10px] font-bold uppercase rotate-[-5deg] inline-block">C06</span>
+                </div>
+                <h2 class="text-4xl italic mb-4">Hello Pop</h2>
+                <p class="text-gray-600 font-bold">
+                    Ludique, coloré et mémorable. Un style magazine qui rend la plomberie humaine et sympathique.
+                </p>
+            </div>
+            <div class="mt-8">
+                <a href="pop_plumbing.html" class="inline-block w-full text-center py-4 bg-[#2d2d2d] text-white rounded-2xl font-bold shadow-[4px_4px_0px_#f4cfdf] hover:shadow-none transition-all">
+                    Voir Pop
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="mt-20 text-center text-slate-400 text-sm">
+        <p>&copy; 2024 Collection Plomberie Design - 6 Modèles</p>
+    </footer>
+
+</body>
+</html>
