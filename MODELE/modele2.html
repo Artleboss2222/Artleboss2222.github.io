@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLOMBIER PRO | Style Néo-Brut</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Public+Sans:wght@400;700;900&display=swap');
+
+        :root {
+            --yellow: #FFD600;
+            --blue: #2563EB;
+            --black: #000000;
+        }
+
+        body {
+            font-family: 'Public Sans', sans-serif;
+            background-color: #F3F4F6;
+        }
+
+        h1, h2, h3, .brutalist-font {
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* Style Néo-Brutaliste : Bordures épaisses et ombres décalées */
+        .neo-box {
+            background: white;
+            border: 4px solid var(--black);
+            box-shadow: 8px 8px 0px var(--black);
+            transition: all 0.2s ease;
+        }
+
+        .neo-box:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 12px 12px 0px var(--black);
+        }
+
+        .neo-button {
+            background: var(--yellow);
+            border: 3px solid var(--black);
+            box-shadow: 4px 4px 0px var(--black);
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 12px 24px;
+            transition: all 0.1s;
+        }
+
+        .neo-button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px var(--black);
+        }
+
+        .neo-nav {
+            border-bottom: 4px solid var(--black);
+        }
+
+        /* Switch Langue Flottant */
+        .lang-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: white;
+            border: 3px solid black;
+            box-shadow: 5px 5px 0px black;
+            padding: 8px;
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-fab button {
+            padding: 5px 10px;
+            font-weight: 900;
+            border: 2px solid transparent;
+        }
+
+        .lang-fab button.active {
+            background: var(--blue);
+            color: white;
+            border-color: black;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 214, 0, 0.9); /* Fond jaune transparent */
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="p-0 m-0">
+
+    <!-- Bouton de Langue Flottant -->
+    <div class="lang-fab">
+        <button id="btn-fr" onclick="updateLang('fr')" class="active">FR</button>
+        <button id="btn-en" onclick="updateLang('en')">EN</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="neo-nav bg-white p-6 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="text-3xl font-black brutalist-font tracking-tighter">
+                <i class="fas fa-pipe"></i> PLUMB<span class="text-blue-600">ER.</span>
+            </div>
+            <div class="hidden md:flex gap-10 items-center font-bold uppercase italic">
+                <a href="#services" class="hover:text-blue-600" data-i18n="nav_1">Nos Services</a>
+                <a href="#contact" class="hover:text-blue-600" data-i18n="nav_2">Contact</a>
+                <button onclick="toggleModal()" class="neo-button bg-blue-600 text-white" data-i18n="nav_cta">Devis Rapide</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="py-20 px-6 bg-[#FFD600]">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <div class="bg-black text-white inline-block px-4 py-2 text-xl brutalist-font" data-i18n="hero_badge">Disponible 24h/24</div>
+                <h1 class="text-6xl md:text-8xl leading-none" data-i18n="hero_title">Zéro Fuite, <br>Zéro Stress.</h1>
+                <p class="text-2xl font-bold bg-white p-4 border-4 border-black" data-i18n="hero_desc">
+                    Nous réparons vos tuyaux plus vite que votre café ne refroidit.
+                </p>
+                <button onclick="toggleModal()" class="neo-button text-2xl w-full md:w-auto py-6 px-12" data-i18n="hero_btn">Appeler un Expert</button>
+            </div>
+            <div class="neo-box overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800" alt="Réparation Plomberie" class="w-full h-full object-cover grayscale">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl mb-16 text-center underline decoration-blue-600 decoration-8 underline-offset-8" data-i18n="serv_head">Ce que nous faisons</h2>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                <!-- Card 1 -->
+                <div class="neo-box p-8 bg-blue-50">
+                    <div class="text-5xl mb-6">🪠</div>
+                    <h3 class="text-2xl mb-4" data-i18n="s1_t">Débouchage</h3>
+                    <p class="font-bold text-slate-700" data-i18n="s1_d">Toilettes, éviers ou égouts. Rien ne nous résiste.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="neo-box p-8 bg-white">
+                    <div class="text-5xl mb-6">🔥</div>
+                    <h3 class="text-2xl mb-4" data-i18n="s2_t">Chauffage</h3>
+                    <p class="font-bold text-slate-700" data-i18n="s2_d">Installation et maintenance de chaudières toute l'année.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="neo-box p-8 bg-green-50">
+                    <div class="text-5xl mb-6">🛠️</div>
+                    <h3 class="text-2xl mb-4" data-i18n="s3_t">Installation</h3>
+                    <p class="font-bold text-slate-700" data-i18n="s3_d">Nouvelles robinetteries et tuyauteries certifiées.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Néo-Brut -->
+    <div id="contact-modal" class="modal">
+        <div class="neo-box p-10 max-w-lg w-full relative">
+            <button onclick="toggleModal()" class="absolute -top-6 -right-6 neo-button bg-red-500 text-white rounded-none w-12 h-12 flex items-center justify-center">X</button>
+            <h2 class="text-3xl mb-6" data-i18n="modal_h">Contact Direct</h2>
+            <form onsubmit="event.preventDefault(); alert('OK'); toggleModal();">
+                <input type="text" placeholder="NOM / NAME" class="w-full border-4 border-black p-4 mb-4 font-bold uppercase focus:bg-yellow-100 outline-none">
+                <input type="tel" placeholder="TÉLÉPHONE" class="w-full border-4 border-black p-4 mb-4 font-bold uppercase focus:bg-yellow-100 outline-none">
+                <textarea rows="4" placeholder="MESSAGE" class="w-full border-4 border-black p-4 mb-4 font-bold uppercase focus:bg-yellow-100 outline-none"></textarea>
+                <button class="neo-button w-full text-xl bg-black text-white py-4" data-i18n="modal_btn">Envoyer</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const texts = {
+            fr: {
+                nav_1: "Nos Services",
+                nav_2: "Contact",
+                nav_cta: "Devis Rapide",
+                hero_badge: "Disponible 24h/24",
+                hero_title: "Zéro Fuite, <br>Zéro Stress.",
+                hero_desc: "Nous réparons vos tuyaux plus vite que votre café ne refroidit.",
+                hero_btn: "Appeler un Expert",
+                serv_head: "Ce que nous faisons",
+                s1_t: "Débouchage",
+                s1_d: "Toilettes, éviers ou égouts. Rien ne nous résiste.",
+                s2_t: "Chauffage",
+                s2_d: "Installation et maintenance de chaudières toute l'année.",
+                s3_t: "Installation",
+                s3_d: "Nouvelles robinetteries et tuyauteries certifiées.",
+                modal_h: "Contact Direct",
+                modal_btn: "Envoyer"
+            },
+            en: {
+                nav_1: "Our Services",
+                nav_2: "Contact",
+                nav_cta: "Fast Quote",
+                hero_badge: "Available 24/7",
+                hero_title: "Zero Leak, <br>Zero Stress.",
+                hero_desc: "We fix your pipes faster than your coffee gets cold.",
+                hero_btn: "Call an Expert",
+                serv_head: "What we do",
+                s1_t: "Unclogging",
+                s1_d: "Toilets, sinks or drains. Nothing resists our team.",
+                s2_t: "Heating",
+                s2_d: "Boiler installation and maintenance all year round.",
+                s3_t: "Installation",
+                s3_d: "Certified new faucets and piping systems.",
+                modal_h: "Direct Contact",
+                modal_btn: "Send"
+            }
+        };
+
+        function updateLang(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.innerHTML = texts[lang][key];
+            });
+
+            // Boutons actifs
+            document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.documentElement.lang = lang;
+        }
+
+        function toggleModal() {
+            document.getElementById('contact-modal').classList.toggle('active');
+        }
+
+        // Init
+        updateLang('fr');
+    </script>
+</body>
+</html>
