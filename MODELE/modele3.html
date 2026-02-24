@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLOMBERIE ELITE | Dark Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap');
+
+        :root {
+            --accent: #00F2FF;
+            --bg: #050505;
+            --card-bg: #0D0D0D;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .nav-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Effet de lueur néon */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 24px;
+            z-index: 1;
+        }
+
+        .gradient-border::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(45deg, transparent, var(--accent), transparent);
+            border-radius: 24px;
+            z-index: -1;
+            transition: opacity 0.3s;
+            opacity: 0.3;
+        }
+
+        .gradient-border:hover::before {
+            opacity: 1;
+        }
+
+        /* Lang Switcher Premium */
+        .lang-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 4px;
+        }
+
+        .lang-toggle button {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .lang-toggle button.active {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .cyber-button {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 12px 32px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        .cyber-button:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 30px var(--accent);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav class="fixed w-full z-50 border-b border-white/10 bg-black/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(34,211,238,0.6)]">
+                    <i class="fas fa-bolt text-black"></i>
+                </div>
+                <span class="text-2xl font-bold tracking-widest nav-font">ELITE<span class="text-cyan-400">PLUMB</span></span>
+            </div>
+
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#services" class="text-sm uppercase tracking-tighter hover:text-cyan-400 transition" data-i18n="nav_1">Expertise</a>
+                
+                <div class="lang-toggle flex gap-1">
+                    <button id="btn-fr" onclick="updateLang('fr')" class="active">FR</button>
+                    <button id="btn-en" onclick="updateLang('en')">EN</button>
+                </div>
+
+                <button onclick="toggleModal()" class="cyber-button text-xs" data-i18n="nav_cta">Intervention</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="min-h-screen flex items-center justify-center relative pt-20">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,242,255,0.1),transparent_70%)]"></div>
+        
+        <div class="max-w-5xl mx-auto px-6 text-center z-10">
+            <h1 class="text-6xl md:text-8xl font-bold mb-8 leading-tight italic" data-i18n="hero_title">
+                L'excellence <br><span class="text-cyan-400 glow-text">Technologique</span>
+            </h1>
+            <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto font-light leading-relaxed" data-i18n="hero_desc">
+                Solutions de plomberie haute performance. Précision chirurgicale. Disponibilité absolue.
+            </p>
+            <div class="flex flex-col md:flex-row gap-6 justify-center">
+                <button onclick="toggleModal()" class="cyber-button" data-i18n="hero_btn">Planifier maintenant</button>
+                <a href="tel:+33123456789" class="px-8 py-3 flex items-center justify-center gap-3 border border-white/20 hover:bg-white/5 transition rounded-sm">
+                    <i class="fas fa-phone-alt text-cyan-400"></i> <span data-i18n="hero_call">URGENCE 24/7</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="gradient-border p-10 space-y-6">
+                    <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-cyan-400 text-2xl">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold italic" data-i18n="s1_t">Diagnostic</h3>
+                    <p class="text-gray-500 leading-relaxed" data-i18n="s1_d">Analyse par caméra thermique et détection acoustique des fuites invisibles.</p>
+                </div>
+                
+                <div class="gradient-border p-10 space-y-6">
+                    <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-cyan-400 text-2xl">
+                        <i class="fas fa-droplet"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold italic" data-i18n="s2_t">Hydraulique</h3>
+                    <p class="text-gray-500 leading-relaxed" data-i18n="s2_d">Optimisation de pression et filtration d'eau intelligente pour toute la maison.</p>
+                </div>
+
+                <div class="gradient-border p-10 space-y-6">
+                    <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-cyan-400 text-2xl">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold italic" data-i18n="s3_t">Maintenance</h3>
+                    <p class="text-gray-500 leading-relaxed" data-i18n="s3_d">Contrats de sérénité pour vos systèmes de chauffage et chauffe-eau connectés.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Form -->
+    <div id="contact-modal" class="modal">
+        <div class="bg-zinc-900 border border-white/10 p-12 max-w-xl w-full mx-4 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold italic" data-i18n="modal_h">Intervention</h2>
+                <button onclick="toggleModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <form class="space-y-6" onsubmit="event.preventDefault(); toggleModal();">
+                <div class="space-y-2">
+                    <label class="text-xs uppercase tracking-widest text-gray-500">Identité</label>
+                    <input type="text" class="w-full bg-black/50 border border-white/10 p-4 rounded-xl focus:border-cyan-400 outline-none transition" placeholder="Nom complet">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs uppercase tracking-widest text-gray-500">Contact</label>
+                    <input type="email" class="w-full bg-black/50 border border-white/10 p-4 rounded-xl focus:border-cyan-400 outline-none transition" placeholder="Email ou Téléphone">
+                </div>
+                <button class="cyber-button w-full mt-4" data-i18n="modal_btn">Envoyer le signal</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const texts = {
+            fr: {
+                nav_1: "Expertise",
+                nav_cta: "Intervention",
+                hero_title: "L'excellence <br><span class='text-cyan-400 glow-text'>Technologique</span>",
+                hero_desc: "Solutions de plomberie haute performance. Précision chirurgicale. Disponibilité absolue.",
+                hero_btn: "Planifier maintenant",
+                hero_call: "URGENCE 24/7",
+                s1_t: "Diagnostic",
+                s1_d: "Analyse par caméra thermique et détection acoustique des fuites invisibles.",
+                s2_t: "Hydraulique",
+                s2_d: "Optimisation de pression et filtration d'eau intelligente pour toute la maison.",
+                s3_t: "Maintenance",
+                s3_d: "Contrats de sérénité pour vos systèmes de chauffage et chauffe-eau connectés.",
+                modal_h: "Intervention",
+                modal_btn: "Envoyer le signal"
+            },
+            en: {
+                nav_1: "Expertise",
+                nav_cta: "Intervention",
+                hero_title: "Technological <br><span class='text-cyan-400 glow-text'>Excellence</span>",
+                hero_desc: "High-performance plumbing solutions. Surgical precision. Absolute availability.",
+                hero_btn: "Schedule Now",
+                hero_call: "24/7 EMERGENCY",
+                s1_t: "Diagnostics",
+                s1_d: "Thermal imaging and acoustic detection for invisible leak identification.",
+                s2_t: "Hydraulics",
+                s2_d: "Pressure optimization and smart water filtration for the whole house.",
+                s3_t: "Maintenance",
+                s3_d: "Peace-of-mind contracts for heating and connected water heaters.",
+                modal_h: "Intervention",
+                modal_btn: "Send Signal"
+            }
+        };
+
+        function updateLang(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.innerHTML = texts[lang][key];
+            });
+            document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        }
+
+        function toggleModal() {
+            document.getElementById('contact-modal').classList.toggle('active');
+        }
+
+        updateLang('fr');
+    </script>
+</body>
+</html>
