@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELLO PLOMBERIE | Style Pop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Quicksand:wght@400;700&display=swap');
+
+        :root {
+            --pop-purple: #E0DEF4;
+            --pop-mint: #C1E1C1;
+            --pop-pink: #F4CFDF;
+            --pop-yellow: #FEF9E7;
+            --pop-text: #2D2D2D;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--pop-yellow);
+            color: var(--pop-text);
+        }
+
+        h1, h2, h3, .serif-font {
+            font-family: 'DM Serif Display', serif;
+        }
+
+        .pop-card {
+            background: white;
+            border-radius: 32px;
+            border: 2px solid var(--pop-text);
+            box-shadow: 0 8px 0 var(--pop-text);
+            transition: all 0.2s ease;
+        }
+
+        .pop-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 0 var(--pop-text);
+        }
+
+        .sticker {
+            display: inline-block;
+            padding: 8px 16px;
+            border: 2px solid var(--pop-text);
+            border-radius: 12px;
+            transform: rotate(-3deg);
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .btn-pop {
+            background-color: var(--pop-text);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 20px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-pop:hover {
+            transform: scale(1.05) rotate(1deg);
+            background-color: #000;
+        }
+
+        /* Lang Switcher */
+        .lang-switch {
+            display: flex;
+            background: white;
+            border: 2px solid var(--pop-text);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .lang-switch button {
+            padding: 6px 16px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            transition: background 0.3s;
+        }
+
+        .lang-switch button.active {
+            background: var(--pop-pink);
+            color: var(--pop-text);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(224, 222, 244, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav class="p-6">
+        <div class="max-w-6xl mx-auto flex justify-between items-center bg-white border-2 border-black rounded-[24px] px-8 py-4">
+            <div class="text-3xl font-bold serif-font flex items-center gap-2">
+                <span class="text-pink-400">Hello</span>Plombier
+            </div>
+
+            <div class="hidden md:flex items-center gap-8 font-bold">
+                <a href="#services" class="hover:text-pink-500" data-i18n="nav_1">Le catalogue</a>
+                
+                <div class="lang-switch">
+                    <button id="btn-fr" onclick="updateLang('fr')" class="active">FR</button>
+                    <button id="btn-en" onclick="updateLang('en')">EN</button>
+                </div>
+
+                <button onclick="toggleModal()" class="bg-mint-200 border-2 border-black px-6 py-2 rounded-xl hover:bg-black hover:text-white transition" data-i18n="nav_cta">Coucou !</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="py-16 md:py-24 px-6">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="space-y-8">
+                <div class="sticker bg-purple-200" data-i18n="hero_badge">Sourire garanti !</div>
+                <h1 class="text-7xl md:text-9xl leading-none italic" data-i18n="hero_title">
+                    Adieu les <br><span class="underline decoration-pink-300 decoration-8 underline-offset-4">soucis.</span>
+                </h1>
+                <p class="text-2xl font-medium text-gray-600" data-i18n="hero_desc">
+                    On s'occupe de vos tuyaux avec amour et expertise. Pas de stress, juste du service.
+                </p>
+                <div class="flex gap-4">
+                    <button onclick="toggleModal()" class="btn-pop text-lg" data-i18n="hero_btn">On en discute ?</button>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="pop-card overflow-hidden aspect-square bg-blue-100">
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800" alt="Sourire Plombier" class="w-full h-full object-cover">
+                </div>
+                <!-- Float Stickers -->
+                <div class="absolute -top-6 -right-6 sticker bg-green-200 p-6 text-xl rotate-12 shadow-lg">24/7</div>
+                <div class="absolute -bottom-6 -left-6 sticker bg-yellow-200 p-4 rotate-[-10deg] shadow-lg" data-i18n="hero_tag">Expert local</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-24 bg-white border-y-2 border-black">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-5xl text-center mb-16 serif-font italic" data-i18n="serv_title">Nos petits soins</h2>
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="pop-card p-10 bg-purple-50">
+                    <div class="w-16 h-16 bg-white border-2 border-black rounded-2xl flex items-center justify-center text-3xl mb-6">🚿</div>
+                    <h3 class="text-3xl mb-4" data-i18n="s1_t">Dépannage</h3>
+                    <p data-i18n="s1_d">Une fuite ? Un bouchon ? On arrive avec nos outils et notre bonne humeur.</p>
+                </div>
+                <div class="pop-card p-10 bg-pink-50">
+                    <div class="w-16 h-16 bg-white border-2 border-black rounded-2xl flex items-center justify-center text-3xl mb-6">✨</div>
+                    <h3 class="text-3xl mb-4" data-i18n="s2_t">Rénov' Pop</h3>
+                    <p data-i18n="s2_d">On transforme votre vieille salle de bain en un vrai petit coin de paradis.</p>
+                </div>
+                <div class="pop-card p-10 bg-green-50">
+                    <div class="w-16 h-16 bg-white border-2 border-black rounded-2xl flex items-center justify-center text-3xl mb-6">🌡️</div>
+                    <h3 class="text-3xl mb-4" data-i18n="s3_t">Chauffage</h3>
+                    <p data-i18n="s3_d">Pour que votre maison soit toujours aussi douce que votre pull préféré.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Pop -->
+    <div id="contact-modal" class="modal">
+        <div class="pop-card p-12 max-w-lg w-full relative bg-white">
+            <button onclick="toggleModal()" class="absolute top-6 right-6 text-3xl hover:rotate-90 transition">×</button>
+            <h2 class="text-5xl mb-8 serif-font text-center" data-i18n="modal_h">Écrivez-nous !</h2>
+            <form class="space-y-6" onsubmit="event.preventDefault(); toggleModal();">
+                <input type="text" class="w-full border-2 border-black p-4 rounded-2xl font-bold bg-yellow-50 outline-none focus:ring-4 ring-pink-200" placeholder="Votre petit nom">
+                <input type="tel" class="w-full border-2 border-black p-4 rounded-2xl font-bold bg-yellow-50 outline-none focus:ring-4 ring-pink-200" placeholder="Votre numéro">
+                <textarea class="w-full border-2 border-black p-4 rounded-2xl font-bold bg-yellow-50 outline-none focus:ring-4 ring-pink-200" rows="3" placeholder="Votre projet"></textarea>
+                <button class="btn-pop w-full text-xl" data-i18n="modal_btn">Envoyer le message</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const texts = {
+            fr: {
+                nav_1: "Le catalogue",
+                nav_cta: "Coucou !",
+                hero_badge: "Sourire garanti !",
+                hero_title: "Adieu les <br><span class='underline decoration-pink-300 decoration-8 underline-offset-4'>soucis.</span>",
+                hero_desc: "On s'occupe de vos tuyaux avec amour et expertise. Pas de stress, juste du service.",
+                hero_btn: "On en discute ?",
+                hero_tag: "Expert local",
+                serv_title: "Nos petits soins",
+                s1_t: "Dépannage",
+                s1_d: "Une fuite ? Un bouchon ? On arrive avec nos outils et notre bonne humeur.",
+                s2_t: "Rénov' Pop",
+                s2_d: "On transforme votre vieille salle de bain en un vrai petit coin de paradis.",
+                s3_t: "Chauffage",
+                s3_d: "Pour que votre maison soit toujours aussi douce que votre pull préféré.",
+                modal_h: "Écrivez-nous !",
+                modal_btn: "Envoyer le message"
+            },
+            en: {
+                nav_1: "The Catalogue",
+                nav_cta: "Hello!",
+                hero_badge: "Smile guaranteed!",
+                hero_title: "Goodbye <br><span class='underline decoration-pink-300 decoration-8 underline-offset-4'>troubles.</span>",
+                hero_desc: "We take care of your pipes with love and expertise. No stress, just great service.",
+                hero_btn: "Let's chat?",
+                hero_tag: "Local expert",
+                serv_title: "Our little treats",
+                s1_t: "Repairs",
+                s1_d: "A leak? A clog? We arrive with our tools and our good mood.",
+                s2_t: "Pop Renov'",
+                s2_d: "We transform your old bathroom into a real little piece of paradise.",
+                s3_t: "Heating",
+                s3_d: "So your home is always as cozy as your favorite sweater.",
+                modal_h: "Write to us!",
+                modal_btn: "Send the message"
+            }
+        };
+
+        function updateLang(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.innerHTML = texts[lang][key];
+            });
+            document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        }
+
+        function toggleModal() {
+            document.getElementById('contact-modal').classList.toggle('active');
+        }
+
+        updateLang('fr');
+    </script>
+</body>
+</html>
