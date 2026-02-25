@@ -3,154 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plomberie St-Mars Inc. | Plomberie St-Mars</title>
-    <meta name="description" content="Expertise en plomberie à Montréal. 4.8 étoiles, service d'urgence, résidentiel et gaz naturel.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <title>Plomberie St-Mars Inc. | Excellence & Fiabilité</title>
+    <meta name="description" content="Expertise en plomberie à Montréal. Service d'urgence 24/7, résidentiel et commercial.">
+    
+    <!-- Framework & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Styles Externes -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">ST-MARS</a>
-            <ul class="nav-links">
-                <li><a href="#services">Services</a></li>
-                <li><a href="#avis">Avis</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <a href="tel:5149338411" class="btn-cta">Appeler Maintenant</a>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white">
+                    <i class="fas fa-faucet-drip"></i>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tight text-slate-900">ST-MARS</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 font-semibold text-slate-600">
+                <a href="#services" class="hover:text-blue-600 transition">Services</a>
+                <a href="#about" class="hover:text-blue-600 transition">À Propos</a>
+                <a href="booking.html" class="btn-primary text-white px-6 py-3 rounded-full">Estimation Gratuite</a>
+            </div>
         </div>
     </nav>
 
-    <main id="main-content">
-        <section class="hero">
-            <div class="hero-content">
-                <h1 class="reveal-text">Plomberie <br><span>Saint Mars</span></h1>
-                <p class="reveal-sub">Expertise 4.8 Étoiles à Montréal — Précision & Propreté.</p>
-                <div class="hero-btns" style="margin-top: 2rem;">
-                    <a href="tel:5149338411" class="btn-primary">(514) 933-8411</a>
-                    <a href="booking.html" class="btn-secondary">Faire une demande</a>
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6 hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full font-bold text-sm">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-600"></span>
+                    </span>
+                    URGENCES 24/7 À MONTRÉAL
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 leading-tight">
+                    Plomberie de <span class="text-blue-600">Confiance</span>.
+                </h1>
+                <p class="text-xl text-slate-600 max-w-lg leading-relaxed">
+                    Des solutions durables pour vos problèmes de tuyauterie, de gaz et de rénovation. Expertise certifiée CMMTQ.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="calendar.html" class="btn-primary text-white px-8 py-4 rounded-2xl text-center font-bold text-lg">
+                        Prendre Rendez-vous
+                    </a>
+                    <a href="tel:5149338411" class="bg-white border-2 border-slate-200 px-8 py-4 rounded-2xl text-center font-bold text-lg hover:bg-slate-50 transition">
+                        <i class="fas fa-phone mr-2"></i> (514) 933-8411
+                    </a>
                 </div>
             </div>
-        </section>
-
-        <div class="stats-banner">
-            <div class="stat-item">
-                <span class="stat-num" data-target="37">0</span>
-                <span class="stat-label">Avis Google</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-num">4.8</span>
-                <span class="stat-label">Note Globale</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-num" data-target="100">0</span>
-                <span class="stat-label">% Ponctualité</span>
+            <div class="relative">
+                <div class="w-full aspect-square bg-blue-100 rounded-[2rem] overflow-hidden shadow-2xl rotate-3">
+                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80" alt="Plombier professionnel travaillant sur une tuyauterie" class="w-full h-full object-cover">
+                </div>
+                <!-- Stats Floating Card -->
+                <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-blue-50">
+                    <div class="flex items-center gap-4">
+                        <div class="text-4xl font-black text-blue-600"><span class="stat-num" data-target="25">0</span>+</div>
+                        <div class="text-sm font-bold text-slate-500 uppercase tracking-wider">Années<br>d'expérience</div>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-        <section id="services" class="services">
-            <div class="section-header" style="margin-bottom: 4rem;">
-                <h2 style="font-size: 2.5rem;">Nos Services</h2>
+    <!-- Services Section -->
+    <section id="services" class="py-24 px-6 bg-white">
+        <div class="max-w-7xl mx-auto text-center mb-16">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-4 uppercase tracking-tight">Nos Services Experts</h2>
+            <div class="h-1.5 w-24 bg-blue-600 mx-auto rounded-full"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+            <!-- Service 1 -->
+            <div class="service-card p-10 bg-slate-50 rounded-3xl border border-slate-100">
+                <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg shadow-blue-200">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-slate-900">Urgence 24/7</h3>
+                <p class="text-slate-600 leading-relaxed">
+                    Débouchage, fuites d'eau ou bris de tuyauterie majeurs. Nos équipes mobiles sillonnent Montréal pour intervenir en moins d'une heure.
+                </p>
+                <a href="tel:5149338411" class="inline-block mt-6 text-blue-600 font-bold hover:underline">Appeler maintenant →</a>
             </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon"><i class="fa-solid fa-bell-concierge"></i></div>
-                    <h3>Urgence 24/7</h3>
-                    <p>Intervention rapide pour fuites et refoulements.</p>
+            
+            <!-- Service 2 -->
+            <div class="service-card p-10 bg-slate-50 rounded-3xl border border-slate-100">
+                <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg shadow-blue-200">
+                    <i class="fas fa-fire"></i>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fa-solid fa-house"></i></div>
-                    <h3>Résidentiel</h3>
-                    <p>Rénovation et entretien complet.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
-                    <h3>Gaz Naturel</h3>
-                    <p>Certification CMMTQ pour installations sécurisées.</p>
-                </div>
+                <h3 class="text-2xl font-bold mb-4 text-slate-900">Gaz Naturel</h3>
+                <p class="text-slate-600 leading-relaxed">
+                    Installation et entretien de fournaises, chauffe-eau et foyers au gaz. Certification complète pour votre sécurité et tranquillité d'esprit.
+                </p>
+                <a href="booking.html" class="inline-block mt-6 text-blue-600 font-bold hover:underline">Demander un devis →</a>
             </div>
-        </section>
+            
+            <!-- Service 3 -->
+            <div class="service-card p-10 bg-slate-50 rounded-3xl border border-slate-100">
+                <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg shadow-blue-200">
+                    <i class="fas fa-bath"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-slate-900">Rénovation</h3>
+                <p class="text-slate-600 leading-relaxed">
+                    Conception et installation complète de plomberie pour vos projets de salle de bain ou cuisine. Expertise esthétique et fonctionnelle.
+                </p>
+                <a href="calendar.html" class="inline-block mt-6 text-blue-600 font-bold hover:underline">Prendre rendez-vous →</a>
+            </div>
+        </div>
+    </section>
 
-        <section id="avis" class="testimonials-section">
-            <h2 class="title" style="font-size: 2.5rem;">Ils nous font <span>confiance</span>.</h2>
-            <div class="carousel-wrapper">
-                <div class="bento-track" id="bento-track">
-                    <div class="bento-item">
-                        <div class="rating">★★★★★</div>
-                        <p>"Ils font preuve de compétences et de ponctualité, avec des prix justes! Recommandé à 100%"</p>
-                        <div class="user" style="display: flex; align-items: center; gap: 15px; margin-top: 2rem;">
-                            <div class="avatar">
-                                <img src="PICTURE/IMG_2554.png" alt="Sanie Varela">
-                            </div>
-                            <div>
-                                <div class="name" style="font-weight: bold;">Sanie Varela</div>
-                                <div class="role" style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Client résidentiel</div>
-                            </div>
-                        </div>
+    <!-- Map Section -->
+    <section class="py-20 px-6 bg-slate-50">
+        <div class="max-w-7xl mx-auto bg-white p-4 rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden">
+            <div class="grid md:grid-cols-2 gap-0">
+                <div class="h-[400px] w-full">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2797.10854447333!2d-73.5794833!3d45.4877708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91a6ef532b699%3A0xe549a997d976be0a!2sPlomberie%20St-Mars%20Inc!5e0!3m2!1sfr!2sca!4v1715632000000!5m2!1sfr!2sca" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="p-12 flex flex-col justify-center bg-slate-900 text-white">
+                    <h3 class="text-3xl font-bold mb-6 italic">Nous joindre</h3>
+                    <div class="space-y-6 text-slate-300">
+                        <p class="flex items-center gap-4"><i class="fas fa-map-marker-alt text-blue-500"></i> 1803 Rue de Bellechasse, Montréal, QC H2G 1K4</p>
+                        <p class="flex items-center gap-4"><i class="fas fa-phone text-blue-500"></i> (514) 933-8411</p>
+                        <p class="flex items-center gap-4"><i class="fas fa-clock text-blue-500"></i> Lun - Ven : 08:00 - 17:00 (Urgence 24h)</p>
                     </div>
-                    <div class="bento-item">
-                        <div class="rating">★★★★★</div>
-                        <p>"Intervention rapide pour une fuite d'urgence. Travail soigné, prix honnête."</p>
-                        <div class="user" style="display: flex; align-items: center; gap: 15px; margin-top: 2rem;">
-                            <div class="avatar" style="background: #222;"></div>
-                            <div>
-                                <div class="name" style="font-weight: bold;">Léa Vachon</div>
-                                <div class="role" style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Cliente</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="nav-controls">
-                <button class="nav-btn prev"><i class="fa-solid fa-chevron-left"></i></button>
-                <button class="nav-btn next"><i class="fa-solid fa-chevron-right"></i></button>
-            </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="contact" class="location">
-            <div class="map-placeholder">
-                <div style="text-align: center;">
-                    <p style="font-weight: bold; font-size: 1.2rem;">5000 Av. Gilmore, Montréal, QC H4E 4N3</p>
-                    <p style="color: var(--accent-blue);">Ouvert jusqu'à 17:00</p>
-                </div>
+    <!-- Footer -->
+    <footer class="bg-white py-12 px-6 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-2xl font-black text-slate-900 tracking-tighter">ST-MARS</div>
+            <p class="text-slate-500">&copy; <span id="year"></span> Plomberie St-Mars Inc. Tous droits réservés.</p>
+            <div class="flex gap-6 text-slate-400">
+                <a href="#" class="hover:text-blue-600 transition"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="hover:text-blue-600 transition"><i class="fab fa-instagram"></i></a>
             </div>
-        </section>
-    </main>
+        </div>
+    </footer>
 
+    <!-- Chatbot Widget -->
     <div id="toilet-chatbot-container">
         <div id="chatbot-window" class="hidden">
-            <div id="chatbot-header">🔧 Assistant St-Mars</div>
-            <div id="chatbot-messages">
-                <p>Bonjour ! Je suis l'assistant de Plomberie St-Mars. 🚽<br><br>Comment puis-je vous aider ?</p>
-                <div id="quick-options">
-                    <button onclick="handleOption('urgence')">🚨 Urgence</button>
-                    <button onclick="handleOption('devis')">📋 Devis</button>
-                    <button onclick="handleOption('rdv')">📅 Prendre RDV</button>
+            <div id="chatbot-header" class="flex justify-between items-center">
+                <span>🔧 Assistant St-Mars</span>
+                <button onclick="toggleChatbot()" class="text-white/80 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="chatbot-messages" class="p-6 overflow-y-auto max-h-[300px]">
+                <p class="bg-blue-50 p-4 rounded-2xl text-sm mb-4 text-slate-700">
+                    Bonjour ! Je suis l'assistant de Plomberie St-Mars. 🚽<br><br>Comment puis-je vous aider ?
+                </p>
+                <div id="quick-options" class="space-y-2">
+                    <button class="option-btn" onclick="handleOption('urgence')">🚨 Signaler une urgence</button>
+                    <button class="option-btn" onclick="handleOption('devis')">📋 Demander une estimation</button>
+                    <button class="option-btn" onclick="handleOption('rdv')">📅 Prendre rendez-vous</button>
                 </div>
             </div>
-            <div id="chatbot-input-area">
-                <input type="text" id="user-input" placeholder="Message...">
-                <button id="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
-            </div>
         </div>
-        <div id="toilet-button">
+        <div id="toilet-button" onclick="toggleChatbot()">
             <span class="toilet-emoji">🚽</span>
         </div>
     </div>
+
+    <!-- Scripts Externes -->
     <script src="script.js"></script>
 </body>
-<footer>
-    <div class="footer-content">
-        <p>&copy; <span id="year"></span> Plomberie St-Mars Inc. Tous droits réservés.</p>
-        <div class="footer-links">
-            <a href="license.html">Mentions Légales</a>
-            <a href="#">Confidentialité</a>
-        </div>
-    </div>
-</footer>
 </html>
