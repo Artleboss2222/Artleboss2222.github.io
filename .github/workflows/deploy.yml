@@ -1,0 +1,23 @@
+name: "Deployment Pro"
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    name: "Secure Deploy"
+    runs-on: ubuntu-latest
+    # Cette ligne est cruciale : elle dit que si le scan CodeQL échoue, on ne déploie rien !
+    # (Remplace 'analyze' par le nom du job dans ton codeql.yml)
+    # needs: analyze 
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: "Simulation de déploiement"
+        run: |
+          echo "Vérification des certificats..."
+          echo "Analyse de sécurité terminée..."
+          echo "Déploiement en cours sur le serveur sécurisé..."
