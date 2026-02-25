@@ -1,6 +1,6 @@
 ## 🛡️ Architecture de Sécurité
-![CodeQL Status](https://github.com/Artleboss2222/Artleboss2222.github.io/actions/workflows/codeql.yml/badge.svg)
-![Deploy Status](https://github.com/Artleboss2222/Artleboss2222.github.io/actions/workflows/deploy.yml/badge.svg)
+![CodeQL Status](https://github.com/Artleboss2222/Artleboss2222.github.io/.github/workflows/codeql.yml/badge.svg)
+![Deploy Status](https://github.com/Artleboss2222/Artleboss2222.github.io/.github/workflows/deploy.yml/badge.svg)
 
 Ce projet intègre les standards de sécurité les plus stricts de l'industrie :
 
