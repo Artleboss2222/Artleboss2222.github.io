@@ -37,9 +37,9 @@
         }
 
         .slot-btn.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
+            background: var(--primary) !important;
+            color: white !important;
+            border-color: var(--primary) !important;
         }
 
         .hero-gradient {
@@ -47,33 +47,13 @@
                         radial-gradient(circle at bottom left, #f0f9ff, transparent);
         }
 
-        /* Amélioration mobile pour les inputs */
         input, select, textarea {
             font-size: 16px !important;
         }
 
-        .input-valid {
-            border-color: #10b981 !important;
-            background-color: #f0fdf4;
-        }
-
-        .input-error {
-            border-color: #ef4444 !important;
-            background-color: #fef2f2;
-        }
-
-        .error-text {
-            color: #ef4444;
-            font-size: 0.75rem;
-            margin-top: 0.4rem;
-            display: none;
-            font-weight: 600;
-        }
-
-        /* Notification SMS Responsive */
         .sms-notification {
             position: fixed;
-            top: -120px;
+            top: -150px;
             left: 50%;
             transform: translateX(-50%);
             width: calc(100% - 32px);
@@ -101,7 +81,6 @@
             flex-shrink: 0;
         }
 
-        /* Calendrier défilant sur mobile */
         @media (max-width: 640px) {
             #calendar-grid {
                 display: flex;
@@ -111,7 +90,7 @@
                 gap: 8px;
             }
             .day-btn {
-                min-width: 70px;
+                min-width: 75px;
                 scroll-snap-align: start;
             }
         }
@@ -119,11 +98,9 @@
 </head>
 <body class="min-h-screen hero-gradient">
 
-    <!-- Notification SMS -->
-    <div id="sms-pop" class="sms-notification">
-        <div class="sms-icon">
-            <i class="fas fa-comment-alt text-lg"></i>
-        </div>
+    <!-- Notification SMS simulée -->
+    <div id="sms-pop" class="sms-notification" onclick="gsap.to('#sms-pop', {top: -150})">
+        <div class="sms-icon"><i class="fas fa-comment-alt text-lg"></i></div>
         <div class="flex-1">
             <div class="flex justify-between items-center mb-1">
                 <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Messages</span>
@@ -134,10 +111,9 @@
         </div>
     </div>
 
-    <!-- Navbar -->
     <nav class="p-4 md:p-6">
         <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-2 group prefetch-link">
+            <a href="index.html" class="flex items-center gap-2 group">
                 <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white transition group-hover:rotate-12 shadow-lg shadow-blue-200">
                     <i class="fas fa-arrow-left text-sm"></i>
                 </div>
@@ -149,99 +125,89 @@
 
     <main class="max-w-4xl mx-auto px-4 md:px-6 py-6 md:py-12">
         <div class="text-center mb-8 md:mb-12">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">Réservez en ligne</h1>
-            <p class="text-slate-600 text-sm md:text-base">Confirmation immédiate par SMS.</p>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">Réservez votre intervention</h1>
+            <p class="text-slate-600 text-sm md:text-base">Planifiez en 2 minutes, nous nous occupons du reste.</p>
         </div>
 
-        <!-- Indicateur d'étapes -->
-        <div class="flex justify-start md:justify-center gap-3 mb-8 overflow-x-auto pb-2 no-scrollbar">
-            <div id="step-1-pill" class="step-pill active px-5 py-2.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap transition-all">1. Détails</div>
+        <div class="flex justify-start md:justify-center gap-3 mb-8 overflow-x-auto pb-2">
+            <div id="step-1-pill" class="step-pill active px-5 py-2.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap transition-all">1. Vos infos</div>
             <div id="step-2-pill" class="step-pill bg-white text-slate-400 px-5 py-2.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap transition-all">2. Horaire</div>
-            <div id="step-3-pill" class="step-pill bg-white text-slate-400 px-5 py-2.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap transition-all">3. Confirmation</div>
+            <div id="step-3-pill" class="step-pill bg-white text-slate-400 px-5 py-2.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap transition-all">3. Terminé</div>
         </div>
 
-        <div class="glass-card rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 shadow-2xl relative overflow-hidden">
+        <div class="glass-card rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 shadow-2xl relative">
             
-            <!-- ÉTAPE 1 : Détails -->
-            <div id="step-1" class="space-y-6 md:space-y-8">
-                <div class="grid md:grid-cols-2 gap-5 md:gap-6">
+            <!-- ÉTAPE 1 : Informations Client -->
+            <div id="step-1" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-5">
                     <div class="space-y-2">
                         <label class="text-xs font-bold text-slate-500 uppercase ml-1">Nom Complet</label>
-                        <input type="text" id="fullname" placeholder="Jean Tremblay" autocomplete="name" class="w-full p-4 rounded-2xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition bg-white/50">
+                        <input type="text" id="fullname" placeholder="Jean Tremblay" class="w-full p-4 rounded-2xl border border-slate-200 outline-none transition bg-white/50 focus:border-blue-500">
                     </div>
-                    <div class="space-y-2 relative">
-                        <label class="text-xs font-bold text-slate-500 uppercase ml-1">Téléphone (Montréal)</label>
-                        <div class="relative">
-                            <input type="tel" id="phone" placeholder="(514) 000-0000" maxlength="14" inputmode="tel" class="w-full p-4 rounded-2xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition bg-white/50">
-                            <i id="phone-valid-icon" class="fas fa-check-circle absolute right-4 top-1/2 -translate-y-1/2 text-green-500 hidden"></i>
-                        </div>
-                        <p id="phone-error" class="error-text">Numéro valide (514 ou 438) requis.</p>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-500 uppercase ml-1">Téléphone</label>
+                        <input type="tel" id="phone" placeholder="(514) 000-0000" class="w-full p-4 rounded-2xl border border-slate-200 outline-none transition bg-white/50 focus:border-blue-500">
                     </div>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-xs font-bold text-slate-500 uppercase ml-1">Type de problème</label>
-                    <select id="service-type" class="w-full p-4 rounded-2xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition bg-white cursor-pointer">
-                        <option value="fuite">Fuite d'eau / Tuyauterie</option>
-                        <option value="debouchage">Débouchage de drain</option>
-                        <option value="chauffe-eau">Installation Chauffe-eau</option>
-                        <option value="gaz">Installation / Réparation Gaz</option>
-                        <option value="renovation">Projet de Rénovation</option>
+                    <label class="text-xs font-bold text-slate-500 uppercase ml-1">Type de service</label>
+                    <select id="service-type" class="w-full p-4 rounded-2xl border border-slate-200 outline-none bg-white">
+                        <option value="Fuite d'eau">Fuite d'eau</option>
+                        <option value="Debouchage">Débouchage</option>
+                        <option value="Chauffe-eau">Chauffe-eau</option>
+                        <option value="Urgence">Urgence 24/7</option>
                     </select>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-xs font-bold text-slate-500 uppercase ml-1">Description</label>
-                    <textarea id="description" rows="3" placeholder="Ex: Robinet qui fuit..." class="w-full p-4 rounded-2xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition bg-white/50"></textarea>
+                    <label class="text-xs font-bold text-slate-500 uppercase ml-1">Description (Optionnel)</label>
+                    <textarea id="description" rows="2" placeholder="Précisez votre problème..." class="w-full p-4 rounded-2xl border border-slate-200 outline-none transition bg-white/50 focus:border-blue-500"></textarea>
                 </div>
 
-                <button id="btn-to-step-2" onclick="validateStep1()" class="w-full bg-blue-600 text-white p-5 rounded-2xl font-bold text-lg shadow-xl hover:bg-blue-700 active:scale-95 transition-all">
-                    Continuer <i class="fas fa-arrow-right ml-2"></i>
+                <button onclick="validateStep1()" class="w-full bg-blue-600 text-white p-5 rounded-2xl font-bold text-lg shadow-xl hover:bg-blue-700 transition-all">
+                    Choisir ma date <i class="fas fa-arrow-right ml-2"></i>
                 </button>
             </div>
 
-            <!-- ÉTAPE 2 : Horaire -->
+            <!-- ÉTAPE 2 : Calendrier et Heures -->
             <div id="step-2" class="hidden space-y-8">
-                <div class="grid lg:grid-cols-2 gap-8 md:gap-10">
+                <div class="grid lg:grid-cols-2 gap-8">
                     <div>
-                        <label class="text-xs font-bold text-slate-500 uppercase mb-4 block">1. Choisir une date</label>
-                        <div class="grid grid-cols-7 gap-2" id="calendar-grid"></div>
+                        <label class="text-xs font-bold text-slate-500 uppercase mb-4 block">1. Sélectionner une date</label>
+                        <div id="calendar-grid" class="grid grid-cols-7 sm:grid-cols-4 gap-2"></div>
                     </div>
 
                     <div class="space-y-4">
-                        <label class="text-xs font-bold text-slate-500 uppercase block">2. Heure de passage</label>
-                        <div class="grid grid-cols-1 gap-3">
-                            <button onclick="selectSlot(this)" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 active:scale-98 transition-all">08:00 – 10:00</button>
-                            <button onclick="selectSlot(this)" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 active:scale-98 transition-all">10:00 – 12:00</button>
-                            <button onclick="selectSlot(this)" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 active:scale-98 transition-all">13:00 – 15:00</button>
-                            <button onclick="selectSlot(this)" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 active:scale-98 transition-all">15:00 – 17:00</button>
+                        <label class="text-xs font-bold text-slate-500 uppercase block">2. Choisir une plage horaire</label>
+                        <div class="grid grid-cols-1 gap-2">
+                            <button onclick="selectSlot(this, '08:00', '10:00')" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 transition-all">08:00 – 10:00</button>
+                            <button onclick="selectSlot(this, '10:00', '12:00')" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 transition-all">10:00 – 12:00</button>
+                            <button onclick="selectSlot(this, '13:00', '15:00')" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 transition-all">13:00 – 15:00</button>
+                            <button onclick="selectSlot(this, '15:00', '17:00')" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 transition-all">15:00 – 17:00</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <button onclick="goToStep(1)" class="order-2 sm:order-1 flex-1 bg-slate-100 text-slate-600 p-5 rounded-2xl font-bold hover:bg-slate-200 transition">Retour</button>
-                    <button id="btn-finish" onclick="goToStep(3)" class="order-1 sm:order-2 flex-[2] bg-blue-600 text-white p-5 rounded-2xl font-bold text-lg shadow-lg hover:bg-blue-700 active:scale-95 transition-all opacity-50 cursor-not-allowed" disabled>
-                        Confirmer le RDV
+                    <button onclick="goToStep(1)" class="flex-1 bg-slate-100 text-slate-600 p-5 rounded-2xl font-bold">Retour</button>
+                    <button id="btn-finish" onclick="submitBooking()" class="flex-[2] bg-blue-600 text-white p-5 rounded-2xl font-bold text-lg shadow-lg opacity-50 cursor-not-allowed" disabled>
+                        Confirmer la réservation
                     </button>
                 </div>
             </div>
 
             <!-- ÉTAPE 3 : Succès -->
-            <div id="step-3" class="hidden text-center py-6 md:py-10 space-y-6">
+            <div id="step-3" class="hidden text-center py-10 space-y-6">
                 <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 animate-bounce">
                     <i class="fas fa-check"></i>
                 </div>
-                <h2 class="text-2xl font-extrabold text-slate-900">C'est confirmé !</h2>
-                <p class="text-slate-600 max-w-sm mx-auto text-sm px-4">
-                    Merci <span id="summary-name" class="font-bold"></span>. Votre intervention est prévue le <span id="summary-date" class="font-bold text-blue-600"></span>.
+                <h2 class="text-2xl font-extrabold text-slate-900">Réservation confirmée !</h2>
+                <p class="text-slate-600 max-w-sm mx-auto text-sm">
+                    Merci <span id="summary-name" class="font-bold"></span>. Votre rendez-vous est enregistré pour le <span id="summary-date" class="font-bold text-blue-600"></span>.
                 </p>
-                <div class="p-5 bg-blue-50 rounded-2xl inline-block border border-blue-100">
-                    <p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Référence</p>
-                    <p class="text-xl font-black text-slate-900">#STM-<span id="ref-id"></span></p>
-                </div>
                 <div class="pt-6">
-                    <a href="index.html" class="block sm:inline-block bg-slate-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-blue-600 transition prefetch-link mx-4 sm:mx-0">Retour à l'accueil</a>
+                    <a href="index.html" class="inline-block bg-slate-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-blue-600 transition">Retour à l'accueil</a>
                 </div>
             </div>
 
@@ -249,117 +215,129 @@
     </main>
 
     <script>
+        // --- CONFIGURATION WEBHOOK ---
+        const WEBHOOK_URL = "https://hook.us2.make.com/bzwwirnqe8msew4fws5kp0inqixdk2r4";
+
         let selectedDate = null;
+        let selectedDateISO = null;
         let selectedSlotText = null;
+        let startH = null;
+        let endH = null;
 
-        /**
-         * Système de préchargement Adaptatif (PC & Mobile)
-         */
-        function initPrefetching() {
-            const links = document.querySelectorAll('.prefetch-link');
-            
-            links.forEach(link => {
-                // Sur PC : On précharge au survol de la souris
-                link.addEventListener('mouseenter', prefetchAction, { once: true });
-                
-                // Sur Mobile : On précharge dès que le doigt touche l'écran (touchstart)
-                // C'est beaucoup plus rapide que d'attendre le clic complet
-                link.addEventListener('touchstart', prefetchAction, { once: true });
-            });
-        }
-
-        function prefetchAction() {
-            const url = this.getAttribute('href');
-            if (url && !document.querySelector(`link[href="${url}"]`)) {
-                const prefetch = document.createElement('link');
-                prefetch.rel = 'prefetch';
-                prefetch.href = url;
-                document.head.appendChild(prefetch);
-                console.log("Mobile Prefetch lancé pour : " + url);
-            }
-        }
-
+        // Formattage téléphone (514) 000-0000
         const phoneInput = document.getElementById('phone');
-        const phoneError = document.getElementById('phone-error');
-        const phoneIcon = document.getElementById('phone-valid-icon');
-
         phoneInput.addEventListener('input', (e) => {
             let val = e.target.value.replace(/\D/g, '');
             let x = val.match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
             e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
-            validatePhone();
         });
 
-        function validatePhone() {
-            const raw = phoneInput.value.replace(/\D/g, '');
-            const ok = raw.length === 10 && (raw.startsWith('514') || raw.startsWith('438'));
-            if (ok) {
-                phoneInput.classList.add('input-valid');
-                phoneIcon.classList.remove('hidden');
-            } else {
-                phoneInput.classList.remove('input-valid');
-                phoneIcon.classList.add('hidden');
-            }
-            return ok;
-        }
+        window.validateStep1 = function() {
+            const name = document.getElementById('fullname').value;
+            if (name.length < 2) { alert("Veuillez entrer votre nom."); return; }
+            goToStep(2);
+            initCalendar();
+        };
 
-        function validateStep1() {
-            const isPhoneOk = validatePhone();
-            const isNameOk = document.getElementById('fullname').value.trim().length > 2;
-            if (isPhoneOk && isNameOk) goToStep(2);
-            else gsap.to('#btn-to-step-2', { x: 8, repeat: 3, yoyo: true, duration: 0.05 });
-        }
-
-        function initCalendar() {
+        window.initCalendar = function() {
             const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = "";
             for(let i=1; i<=14; i++) {
                 const date = new Date();
                 date.setDate(date.getDate() + i);
+                if(date.getDay() === 0) continue; // Pas de dimanche
+                
                 const btn = document.createElement('button');
-                btn.className = "p-3 rounded-xl border border-slate-100 text-sm font-bold day-btn bg-white transition-all";
+                btn.className = "p-3 rounded-xl border border-slate-100 text-sm font-bold day-btn bg-white transition-all hover:border-blue-300";
                 btn.innerHTML = `${date.getDate()}<br><span class="text-[9px] text-slate-400 font-normal uppercase">${date.toLocaleDateString('fr-FR', {weekday: 'short'})}</span>`;
                 btn.onclick = () => {
                     document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('bg-blue-600', 'text-white'));
                     btn.classList.add('bg-blue-600', 'text-white');
-                    selectedDate = date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+                    selectedDate = date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+                    selectedDateISO = date;
                     checkReady();
                 };
                 grid.appendChild(btn);
             }
-        }
+        };
 
-        function selectSlot(btn) {
-            document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('bg-blue-600', 'text-white'));
-            btn.classList.add('bg-blue-600', 'text-white');
+        window.selectSlot = function(btn, start, end) {
+            document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
             selectedSlotText = btn.innerText;
+            startH = start;
+            endH = end;
             checkReady();
-        }
+        };
 
         function checkReady() {
+            const b = document.getElementById('btn-finish');
             if(selectedDate && selectedSlotText) {
-                const b = document.getElementById('btn-finish');
                 b.classList.remove('opacity-50', 'cursor-not-allowed');
                 b.disabled = false;
             }
         }
 
-        function goToStep(step) {
+        window.goToStep = function(step) {
             ['step-1', 'step-2', 'step-3'].forEach(id => document.getElementById(id).classList.add('hidden'));
             document.getElementById('step-' + step).classList.remove('hidden');
             
-            if(step === 3) {
-                document.getElementById('summary-name').innerText = document.getElementById('fullname').value;
-                document.getElementById('summary-date').innerText = selectedDate + " à " + selectedSlotText;
-                document.getElementById('ref-id').innerText = Math.random().toString(36).substr(2, 5).toUpperCase();
-                
-                const sms = document.getElementById('sms-pop');
-                document.getElementById('sms-text').innerText = `Confirmation St-Mars : RDV le ${selectedDate} à ${selectedSlotText}.`;
-                gsap.to(sms, { top: 16, duration: 0.8, ease: "back.out(1.5)", delay: 1 });
-            }
+            ['step-1-pill', 'step-2-pill', 'step-3-pill'].forEach((id, idx) => {
+                const p = document.getElementById(id);
+                if(idx + 1 <= step) {
+                    p.classList.add('active');
+                    p.classList.remove('bg-white', 'text-slate-400');
+                } else {
+                    p.classList.remove('active');
+                    p.classList.add('bg-white', 'text-slate-400');
+                }
+            });
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        };
 
-        window.onload = () => { initCalendar(); initPrefetching(); };
+        window.submitBooking = async function() {
+            const btn = document.getElementById('btn-finish');
+            btn.innerText = "Envoi en cours...";
+            btn.disabled = true;
+
+            // Préparation des dates ISO pour Google Calendar (IMG_2584)
+            const dateStr = selectedDateISO.toISOString().split('T')[0];
+            const bookingData = {
+                clientName: document.getElementById('fullname').value,
+                phone: document.getElementById('phone').value,
+                service: document.getElementById('service-type').value,
+                description: document.getElementById('description').value,
+                dateText: selectedDate,
+                slotText: selectedSlotText,
+                startDate: `${dateStr}T${startH}:00`,
+                endDate: `${dateStr}T${endH}:00`
+            };
+
+            try {
+                // Envoi vers Make.com
+                await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bookingData)
+                });
+
+                document.getElementById('summary-name').innerText = bookingData.clientName;
+                document.getElementById('summary-date').innerText = `${selectedDate} (${selectedSlotText})`;
+                goToStep(3);
+
+                // Animation SMS
+                const sms = document.getElementById('sms-pop');
+                document.getElementById('sms-text').innerText = `Rendez-vous confirmé pour le ${selectedDate}. À bientôt !`;
+                gsap.to(sms, { top: 16, duration: 0.8 });
+                setTimeout(() => gsap.to(sms, { top: -150 }), 5000);
+
+            } catch (error) {
+                alert("Désolé, une erreur est survenue.");
+                btn.innerText = "Confirmer la réservation";
+                btn.disabled = false;
+            }
+        };
     </script>
 </body>
 </html>
