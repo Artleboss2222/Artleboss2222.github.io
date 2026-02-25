@@ -11,7 +11,6 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Glassmorphism Navigation */
 .glass-nav {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
@@ -19,13 +18,11 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Background Gradients */
 .hero-gradient {
     background: radial-gradient(circle at top right, #e0f2fe, transparent),
                 radial-gradient(circle at bottom left, #f0f9ff, transparent);
 }
 
-/* Buttons */
 .btn-primary {
     background: var(--primary);
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
@@ -38,7 +35,6 @@ body {
     filter: brightness(1.1);
 }
 
-/* Service Cards */
 .service-card {
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -49,7 +45,6 @@ body {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
 }
 
-/* Chatbot Style */
 #toilet-button {
     position: fixed;
     bottom: 30px;
