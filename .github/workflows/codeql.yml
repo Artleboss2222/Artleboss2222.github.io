@@ -1,0 +1,50 @@
+name: "CodeQL Analysis"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '30 1 * * 1' # S'exécute tous les lundis à 01:30
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # Langages supportés : 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby'
+        # Modifie cette liste selon les langages de ton projet
+        language: [ 'javascript', 'python' ]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Initialise les outils CodeQL pour l'analyse
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        # "Queries" permet de choisir le niveau d'analyse (security-extended est top pour la vente)
+        queries: security-extended,security-and-quality
+
+    # Autobuild tente de compiler ton code automatiquement
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v3
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{ matrix.language }}"
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v4
+      with:
+        category: "/language:${{matrix.language}}"
