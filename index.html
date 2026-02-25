@@ -124,31 +124,43 @@
         </div>
     </section>
 
-    <!-- Map Section -->
-    <section class="py-20 px-6 bg-slate-50">
-        <div class="max-w-7xl mx-auto bg-white p-4 rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden">
-            <div class="grid md:grid-cols-2 gap-0">
-                <div class="h-[400px] w-full rounded-[2.5rem]">
-                    <iframe         width="100%" 
-        height="100%" 
-        style="border:0; filter: grayscale(1) invert(1) contrast(1.2) opacity(0.8);" 
-        allowfullscreen="" 
-        loading="lazy" 
-        referrerpolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2797.971550267436!2d-73.5880327!3d45.4670219!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91a7f1a3bb677%3A0x16be22c8274f542b!2sSt-Mars%20E%20L%20Inc!5e0!3m2!1sfr!2sca!4v1700000000000">">
-                        </iframe>
-                </div>
-                <div class="p-12 flex flex-col justify-center bg-slate-900 text-white">
-                    <h3 class="text-3xl font-bold mb-6 italic">Nous joindre</h3>
-                    <div class="space-y-6 text-slate-300">
-                        <p class="flex items-center gap-4"><i class="fas fa-map-marker-alt text-blue-500"></i> 1803 Rue de Bellechasse, Montréal, QC H2G 1K4</p>
-                        <p class="flex items-center gap-4"><i class="fas fa-phone text-blue-500"></i> (514) 933-8411</p>
-                        <p class="flex items-center gap-4"><i class="fas fa-clock text-blue-500"></i> Lun - Ven : 08:00 - 17:00 (Urgence 24h)</p>
-                    </div>
+<section class="py-20 px-6 bg-slate-50">
+    <div class="max-w-7xl mx-auto bg-white p-4 rounded-[3rem] shadow-sm border border-slate-200 overflow-hidden">
+        <div class="grid md:grid-cols-2 gap-0">
+            <!-- Conteneur de la Carte Arrondi -->
+            <div class="h-[400px] w-full rounded-[2.5rem] overflow-hidden">
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0; filter: grayscale(1) invert(1) contrast(1.2) opacity(0.8);" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2797.971550267436!2d-73.5880327!3d45.4670219!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91a7f1a3bb677%3A0x16be22c8274f542b!2sSt-Mars%20E%20L%20Inc!5e0!3m2!1sfr!2sca!4v1700000000000">
+                </iframe>
+            </div>
+            
+            <!-- Bloc d'information Arrondi -->
+            <div class="p-12 flex flex-col justify-center bg-slate-900 text-white rounded-[2.5rem] md:rounded-l-none md:ml-[-2rem] z-10">
+                <h3 class="text-3xl font-bold mb-6 italic">Nous joindre</h3>
+                <div class="space-y-6 text-slate-300">
+                    <p class="flex items-center gap-4">
+                        <i class="fas fa-map-marker-alt text-blue-500"></i> 
+                        3644 Rue Notre-Dame Ouest, Montréal, QC H4C 1P6
+                    </p>
+                    <p class="flex items-center gap-4">
+                        <i class="fas fa-phone text-blue-500"></i> 
+                        (514) 933-8411
+                    </p>
+                    <p class="flex items-center gap-4">
+                        <i class="fas fa-clock text-blue-500"></i> 
+                        Lun - Ven : 08:00 - 17:00 (Urgence 24h)
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer class="bg-white py-12 px-6 border-t border-slate-100">
