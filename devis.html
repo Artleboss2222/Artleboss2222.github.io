@@ -124,8 +124,9 @@
                         <input type="text" id="fullname" placeholder="Jean Tremblay" class="w-full p-4 rounded-2xl border border-slate-200 outline-none transition bg-white/50 focus:border-blue-500" required>
                     </div>
                     <div class="space-y-2">
-                        <label class="text-xs font-bold text-slate-500 uppercase ml-1">Téléphone *</label>
+                        <label class="text-xs font-bold text-slate-500 uppercase ml-1">Téléphone (514/438) *</label>
                         <input type="tel" id="phone" placeholder="(514) 000-0000" class="w-full p-4 rounded-2xl border border-slate-200 outline-none transition bg-white/50 focus:border-blue-500" required>
+                        <p id="phone-error" class="text-[10px] text-red-500 font-bold hidden">Préfixe 514 ou 438 requis.</p>
                     </div>
                 </div>
 
@@ -163,7 +164,7 @@
                 </div>
                 <h2 class="text-2xl font-extrabold text-slate-900">Demande envoyée !</h2>
                 <p class="text-slate-600 max-w-sm mx-auto text-sm">
-                    Merci <span id="summary-name" class="font-bold"></span>. Votre demande de devis a bien été transmise à notre équipe. Nous vous répondrons dans les plus brefs délais au <span id="summary-email" class="font-bold text-blue-600"></span>.
+                    Merci <span id="summary-name" class="font-bold"></span>. Votre demande de devis a bien été enregistrée. Nous vous répondrons dans les plus brefs délais au <span id="summary-email" class="font-bold text-blue-600"></span>.
                 </p>
                 <div class="pt-6">
                     <a href="index.html" class="inline-block bg-slate-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-blue-600 transition">Retour à l'accueil</a>
@@ -173,29 +174,74 @@
         </div>
     </main>
 
-    <script>
-        // --- CONFIGURATION WEBHOOK ---
-        const WEBHOOK_URL = "https://hook.us2.make.com/bzwwirnqe8msew4fws5kp0inqixdk2r4";
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Formattage téléphone (514) 000-0000
+        // Configuration Firebase
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'plomberie-app';
+
+        let user = null;
+
+        // Authentification
+        const initAuth = async () => {
+            try {
+                await signInAnonymously(auth);
+            } catch (e) { console.error("Auth error", e); }
+        };
+        initAuth();
+        onAuthStateChanged(auth, (u) => { user = u; });
+
+        // Formattage téléphone et validation 514/438
         const phoneInput = document.getElementById('phone');
         phoneInput.addEventListener('input', (e) => {
             let val = e.target.value.replace(/\D/g, '');
             let x = val.match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
             e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+            
+            const errorMsg = document.getElementById('phone-error');
+            if (val.length >= 3) {
+                const prefix = val.substring(0, 3);
+                if (prefix !== "514" && prefix !== "438") {
+                    errorMsg.classList.remove('hidden');
+                } else {
+                    errorMsg.classList.add('hidden');
+                }
+            } else {
+                errorMsg.classList.add('hidden');
+            }
         });
 
         window.submitQuote = async function() {
             // Récupération des valeurs
             const name = document.getElementById('fullname').value.trim();
-            const phone = document.getElementById('phone').value.trim();
+            const rawPhone = document.getElementById('phone').value.replace(/\D/g, '');
+            const phoneDisplay = document.getElementById('phone').value;
             const email = document.getElementById('email').value.trim();
             const service = document.getElementById('service-type').value;
             const description = document.getElementById('description').value.trim();
 
-            // Validation basique
-            if (!name || !phone || !email || !description) {
+            // Validation des champs
+            if (!name || !rawPhone || !email || !description) {
                 alert("Veuillez remplir tous les champs obligatoires (*).");
+                return;
+            }
+
+            // Validation du préfixe 514 / 438
+            const prefix = rawPhone.substring(0, 3);
+            if (prefix !== "514" && prefix !== "438") {
+                alert("Désolé, nous ne desservons que les secteurs 514 et 438.");
+                return;
+            }
+
+            if (!user) {
+                alert("Erreur de session. Veuillez rafraîchir la page.");
                 return;
             }
 
@@ -207,33 +253,28 @@
             const quoteData = {
                 type: "Demande de Devis",
                 clientName: name,
-                phone: phone,
+                phone: phoneDisplay,
                 email: email,
                 service: service,
                 description: description,
-                submissionDate: new Date().toISOString()
+                createdAt: serverTimestamp(),
+                userId: user.uid
             };
 
             try {
-                // Envoi vers Make.com
-                await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(quoteData)
-                });
+                // SAUVEGARDE DANS FIRESTORE
+                const quotesRef = collection(db, 'artifacts', appId, 'public', 'data', 'quotes');
+                await addDoc(quotesRef, quoteData);
 
-                // Mise à jour de l'UI pour l'étape 2
+                // Mise à jour de l'UI
                 document.getElementById('summary-name').innerText = name;
                 document.getElementById('summary-email').innerText = email;
                 
-                // Changement d'étape
                 document.getElementById('step-1').classList.add('hidden');
                 document.getElementById('step-2').classList.remove('hidden');
                 
                 document.getElementById('step-1-pill').classList.remove('active', 'bg-blue-600', 'text-white');
                 document.getElementById('step-1-pill').classList.add('bg-white', 'text-slate-400');
-                
                 document.getElementById('step-2-pill').classList.remove('bg-white', 'text-slate-400');
                 document.getElementById('step-2-pill').classList.add('active');
 
@@ -241,12 +282,13 @@
 
                 // Animation SMS
                 const sms = document.getElementById('sms-pop');
-                document.getElementById('sms-text').innerText = `Bonjour ${name.split(' ')[0]}, nous avons bien reçu votre demande de devis. Notre équipe l'analyse en ce moment !`;
+                document.getElementById('sms-text').innerText = `Bonjour ${name.split(' ')[0]}, votre demande de devis a été enregistrée dans notre système cloud !`;
                 gsap.to(sms, { top: 16, duration: 0.8 });
                 setTimeout(() => gsap.to(sms, { top: -150, duration: 0.8 }), 6000);
 
             } catch (error) {
-                alert("Désolé, une erreur est survenue lors de l'envoi de votre demande.");
+                console.error("Firestore Error:", error);
+                alert("Désolé, une erreur est survenue lors de l'envoi vers la base de données.");
                 btn.innerHTML = "Envoyer ma demande de devis <i class='fas fa-paper-plane ml-2'></i>";
                 btn.disabled = false;
                 btn.classList.remove('opacity-75');
