@@ -67,10 +67,32 @@ function handleOption(type) {
     msgContainer.scrollTop = msgContainer.scrollHeight;
 }
 
-// Initialisation de l'année dans le footer
+// Animation du compteur d'années (GSAP)
+function animateStats() {
+    const statNum = document.querySelector('.stat-num');
+    if (!statNum) return;
+
+    const target = parseInt(statNum.getAttribute('data-target'));
+    
+    gsap.to(statNum, {
+        innerText: target,
+        duration: 2,
+        snap: { innerText: 1 },
+        scrollTrigger: {
+            trigger: statNum,
+            start: "top 90%",
+        }
+    });
+}
+
+// Initialisation au chargement du DOM
 document.addEventListener('DOMContentLoaded', () => {
+    // Mise à jour de l'année dans le footer
     const yearSpan = document.getElementById('year');
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
+
+    // Lancer l'animation du compteur d'années
+    animateStats();
 });
