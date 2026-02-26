@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Prendre Rendez-vous | Plomberie St-Mars</title>
+    
+    <!-- Framework & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #0055ff;
+            --secondary: #0F172A;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 85, 255, 0.1);
+        }
+
+        .step-pill.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 85, 255, 0.3);
+        }
+
+        .slot-btn.selected {
+            background: var(--primary) !important;
+            color: white !important;
+            border-color: var(--primary) !important;
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #e0f2fe, transparent),
+                        radial-gradient(circle at bottom left, #f0f9ff, transparent);
+        }
+
+        input, select, textarea {
+            font-size: 16px !important;
+        }
+
+        .sms-notification {
+            position: fixed;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            z-index: 1000;
+            display: flex;
+            gap: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .sms-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 640px) {
+            #calendar-grid {
+                display: flex;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                scroll-snap-type: x mandatory;
+                gap: 8px;
+            }
+            .day-btn {
+                min-width: 75px;
+                scroll-snap-align: start;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen hero-gradient">
+
+    <!-- Notification SMS simulée -->
+    <div id="sms-pop" class="sms-notification" onclick="gsap.to('#sms-pop', {top: -150})">
+        <div class="sms-icon"><i class="fas fa-calendar-check text-lg"></i></div>
+        <div class="flex-1">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Messages</span>
+                <span class="text-[10px] text-slate-400">À l'instant</span>
+            </div>
+            <p class="text-xs font-bold text-slate-900">Plomberie St-Mars</p>
+            <p id="sms-text" class="text-[11px] text-slate-600 leading-tight mt-0.5"></p>
+        </div>
+    </div>
+
+    <nav class="p-4 md:p-6">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white transition group-hover:rotate-12 shadow-lg shadow-blue-200">
+                    <i class="fas fa-arrow-left text-sm"></i>
+                </div>
+                <span class="font-bold text-slate-800 hidden sm:inline">Retour</span>
+            </a>
+            <div class="text-xl md:text-2xl font-black text-slate-900 tracking-tight">ST-MARS</div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 md:px-6 py-6 md:py-12">
+        <div class="text-center mb-8 md:mb-12">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">Réservez votre intervention</h1>
+            <p class="text-slate-600 text-sm md:text-base">Planifiez en 2 minutes, nous nous occupons du reste.</p>
+        </div>
+
+        <div class="flex justify-start md:justify-center gap-3 mb-8 overflow-x-auto pb-2">
+            <div id="step-1-pill" class="step-pill active px-5 py-2.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap transition-all">1. Vos infos</div>
+            <div id="step-2-pill" class="step-pill bg-white text-slate-400 px-5 py-2.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap transition-all">2. Horaire</div>
+            <div id="step-3-pill" class="step-pill bg-white text-slate-400 px-5 py-2.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap transition-all">3. Terminé</div>
+        </div>
+
+        <div class="glass-card rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 shadow-2xl relative">
+            
+            <!-- ÉTAPE 1 : Informations Client -->
+            <div id="step-1" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-500 uppercase ml-1">Nom Complet *</label>
+                        <input type="text" id="fullname" placeholder="Jean Tremblay" class="w-full p-4 rounded-2xl border border-slate-200 outline-none transition bg-white/50 focus:border-blue-500" required>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-500 uppercase ml-1">Téléphone *</label>
+                        <input type="tel" id="phone" placeholder="(514) 000-0000" class="w-full p-4 rounded-2xl border border-slate-200 outline-none transition bg-white/50 focus:border-blue-500" required>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-500 uppercase ml-1">Courriel *</label>
+                        <input type="email" id="email" placeholder="jean@exemple.com" class="w-full p-4 rounded-2xl border border-slate-200 outline-none transition bg-white/50 focus:border-blue-500" required>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-500 uppercase ml-1">Type de service</label>
+                        <select id="service-type" class="w-full p-4 rounded-2xl border border-slate-200 outline-none bg-white">
+                            <option value="Fuite d'eau">Fuite d'eau</option>
+                            <option value="Debouchage">Débouchage</option>
+                            <option value="Chauffe-eau">Chauffe-eau</option>
+                            <option value="Urgence">Urgence 24/7</option>
+                            <option value="Inspection">Inspection caméra</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-500 uppercase ml-1">Description (Optionnel)</label>
+                    <textarea id="description" rows="2" placeholder="Précisez votre problème..." class="w-full p-4 rounded-2xl border border-slate-200 outline-none transition bg-white/50 focus:border-blue-500"></textarea>
+                </div>
+
+                <button onclick="validateStep1()" class="w-full bg-blue-600 text-white p-5 rounded-2xl font-bold text-lg shadow-xl hover:bg-blue-700 transition-all">
+                    Choisir ma date <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+            <!-- ÉTAPE 2 : Calendrier et Heures -->
+            <div id="step-2" class="hidden space-y-8">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 uppercase mb-4 block">1. Sélectionner une date</label>
+                        <div id="calendar-grid" class="grid grid-cols-7 sm:grid-cols-4 gap-2"></div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <label class="text-xs font-bold text-slate-500 uppercase block">2. Choisir une plage horaire</label>
+                        <div class="grid grid-cols-1 gap-2">
+                            <button onclick="selectSlot(this, '08:00', '10:00')" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 transition-all">08:00 – 10:00</button>
+                            <button onclick="selectSlot(this, '10:00', '12:00')" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 transition-all">10:00 – 12:00</button>
+                            <button onclick="selectSlot(this, '13:00', '15:00')" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 transition-all">13:00 – 15:00</button>
+                            <button onclick="selectSlot(this, '15:00', '17:00')" class="slot-btn p-4 rounded-xl border border-slate-200 text-left font-semibold hover:border-blue-500 transition-all">15:00 – 17:00</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="goToStep(1)" class="flex-1 bg-slate-100 text-slate-600 p-5 rounded-2xl font-bold hover:bg-slate-200 transition">Retour</button>
+                    <button id="btn-finish" onclick="submitBooking()" class="flex-[2] bg-blue-600 text-white p-5 rounded-2xl font-bold text-lg shadow-lg opacity-50 cursor-not-allowed" disabled>
+                        Confirmer la réservation
+                    </button>
+                </div>
+            </div>
+
+            <!-- ÉTAPE 3 : Succès -->
+            <div id="step-3" class="hidden text-center py-10 space-y-6">
+                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 animate-bounce">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h2 class="text-2xl font-extrabold text-slate-900">Réservation confirmée !</h2>
+                <p class="text-slate-600 max-w-sm mx-auto text-sm">
+                    Merci <span id="summary-name" class="font-bold"></span>. Votre rendez-vous est enregistré pour le <span id="summary-date" class="font-bold text-blue-600"></span>.
+                </p>
+                <div class="pt-6">
+                    <a href="index.html" class="inline-block bg-slate-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-blue-600 transition">Retour à l'accueil</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // --- CONFIGURATION WEBHOOK ---
+        const WEBHOOK_URL = "https://hook.us2.make.com/bzwwirnqe8msew4fws5kp0inqixdk2r4";
+
+        let selectedDate = null;
+        let selectedDateISO = null;
+        let selectedSlotText = null;
+        let startH = null;
+        let endH = null;
+
+        // Formattage téléphone (514) 000-0000
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '');
+            let x = val.match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+
+        window.validateStep1 = function() {
+            const name = document.getElementById('fullname').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (!name || !phone || !email) { 
+                alert("Veuillez remplir tous les champs obligatoires (*)."); 
+                return; 
+            }
+            goToStep(2);
+            initCalendar();
+        };
+
+        window.initCalendar = function() {
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = "";
+            for(let i=1; i<=14; i++) {
+                const date = new Date();
+                date.setDate(date.getDate() + i);
+                if(date.getDay() === 0) continue; // Pas de dimanche
+                
+                const btn = document.createElement('button');
+                btn.className = "p-3 rounded-xl border border-slate-100 text-sm font-bold day-btn bg-white transition-all hover:border-blue-300";
+                btn.innerHTML = `${date.getDate()}<br><span class="text-[9px] text-slate-400 font-normal uppercase">${date.toLocaleDateString('fr-FR', {weekday: 'short'})}</span>`;
+                btn.onclick = () => {
+                    document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('bg-blue-600', 'text-white'));
+                    btn.classList.add('bg-blue-600', 'text-white');
+                    selectedDate = date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+                    selectedDateISO = date;
+                    checkReady();
+                };
+                grid.appendChild(btn);
+            }
+        };
+
+        window.selectSlot = function(btn, start, end) {
+            document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedSlotText = btn.innerText;
+            startH = start;
+            endH = end;
+            checkReady();
+        };
+
+        function checkReady() {
+            const b = document.getElementById('btn-finish');
+            if(selectedDate && selectedSlotText) {
+                b.classList.remove('opacity-50', 'cursor-not-allowed');
+                b.disabled = false;
+            }
+        }
+
+        window.goToStep = function(step) {
+            ['step-1', 'step-2', 'step-3'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            document.getElementById('step-' + step).classList.remove('hidden');
+            
+            ['step-1-pill', 'step-2-pill', 'step-3-pill'].forEach((id, idx) => {
+                const p = document.getElementById(id);
+                if(idx + 1 <= step) {
+                    p.classList.add('active');
+                    p.classList.remove('bg-white', 'text-slate-400');
+                } else {
+                    p.classList.remove('active');
+                    p.classList.add('bg-white', 'text-slate-400');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.submitBooking = async function() {
+            const btn = document.getElementById('btn-finish');
+            btn.innerHTML = "Envoi en cours... <i class='fas fa-spinner fa-spin ml-2'></i>";
+            btn.disabled = true;
+
+            // Préparation des dates ISO
+            const dateStr = selectedDateISO.toISOString().split('T')[0];
+            const bookingData = {
+                type: "Rendez-vous",
+                clientName: document.getElementById('fullname').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                service: document.getElementById('service-type').value,
+                description: document.getElementById('description').value,
+                dateText: selectedDate,
+                slotText: selectedSlotText,
+                startDate: `${dateStr}T${startH}:00`,
+                endDate: `${dateStr}T${endH}:00`
+            };
+
+            try {
+                // Envoi vers Make.com
+                await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bookingData)
+                });
+
+                document.getElementById('summary-name').innerText = bookingData.clientName;
+                document.getElementById('summary-date').innerText = `${selectedDate} (${selectedSlotText})`;
+                goToStep(3);
+
+                // Animation SMS
+                const sms = document.getElementById('sms-pop');
+                document.getElementById('sms-text').innerText = `Rendez-vous confirmé pour le ${selectedDate}. À bientôt !`;
+                gsap.to(sms, { top: 16, duration: 0.8 });
+                setTimeout(() => gsap.to(sms, { top: -150 }), 5000);
+
+            } catch (error) {
+                alert("Désolé, une erreur est survenue.");
+                btn.innerHTML = "Confirmer la réservation";
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>
