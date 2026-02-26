@@ -6,7 +6,7 @@ function toggleChatbot() {
     if (chatbotWindow.classList.contains('hidden')) {
         chatbotWindow.classList.remove('hidden');
         chatbotWindow.style.display = 'flex';
-        // Petit délai pour l'animation CSS si nécessaire
+        // Petit délai pour l'animation CSS
         setTimeout(() => {
             chatbotWindow.style.opacity = '1';
             chatbotWindow.style.transform = 'translateY(0)';
@@ -29,51 +29,45 @@ function handleOption(type) {
     const msgContainer = document.getElementById('chatbot-messages');
     if (!msgContainer) return;
     
-    // 1. Création du message de l'utilisateur (bulle à droite)
-    const userMsg = document.createElement('div');
-    userMsg.className = "flex justify-end mb-4";
-    userMsg.innerHTML = `
-        <div class="bg-blue-600 text-white px-4 py-2 rounded-2xl rounded-tr-none text-sm shadow-sm">
-            ${type === 'urgence' ? '🚨 Signaler une urgence' : '📋 Demander un devis'}
-        </div>
-    `;
+    // 1. Message de l'utilisateur (Style d'origine)
+    const userMsg = document.createElement('p');
+    userMsg.style.textAlign = "right";
+    userMsg.style.margin = "10px 0";
+    userMsg.style.fontSize = "0.85rem";
+    userMsg.style.color = "#475569";
+    userMsg.textContent = type.toUpperCase();
     msgContainer.appendChild(userMsg);
 
-    // 2. Création de la réponse de l'assistant (bulle à gauche)
-    const assistantMsg = document.createElement('div');
-    assistantMsg.className = "flex justify-start mb-4";
+    // 2. Réponse de l'assistant (Style d'origine)
+    const p = document.createElement('p');
+    p.style.marginTop = "10px";
+    p.style.padding = "12px";
+    p.style.borderRadius = "12px";
+    p.style.background = "rgba(0, 85, 255, 0.1)";
+    p.style.fontSize = "0.9rem";
+    p.style.color = "#1e293b";
     
     if (type === 'urgence') {
-        assistantMsg.innerHTML = `
-            <div class="bg-slate-100 text-slate-700 px-4 py-2 rounded-2xl rounded-tl-none text-sm border border-slate-200">
-                🚨 <strong>Urgence :</strong> Appelez immédiatement le <a href="tel:5149338411" class="text-blue-600 font-bold underline">(514) 933-8411</a>. Nous intervenons 24/7.
-            </div>
-        `;
+        p.innerHTML = "🚨 <strong>Urgence :</strong> Appelez le <strong>(514) 933-8411</strong>. Nous sommes disponibles 24/7.";
     } else if (type === 'devis') {
-        assistantMsg.innerHTML = `
-            <div class="bg-slate-100 text-slate-700 px-4 py-2 rounded-2xl rounded-tl-none text-sm border border-slate-200">
-                <i class="fas fa-spinner animate-spin mr-2"></i> 
-                Très bien ! Je vous redirige vers notre formulaire de devis gratuit...
-            </div>
-        `;
-        
-        // REDIRECTION VERS DEVIS.HTML
-        // Utilisation explicite de l'objet global pour éviter tout conflit
+        p.innerHTML = "📋 <strong>Devis :</strong> Un instant, je vous redirige vers notre formulaire de devis...";
         setTimeout(() => {
-            window.location.assign("devis.html");
-        }, 1500); 
+            window.location.href = "devis.html";
+        }, 1200);
+    } else if (type === 'reservation') {
+        p.innerHTML = "📅 <strong>Rendez-vous :</strong> Je vous dirige vers notre calendrier de réservation...";
+        setTimeout(() => {
+            window.location.href = "reservation.html";
+        }, 1200);
     }
     
-    msgContainer.appendChild(assistantMsg);
+    msgContainer.appendChild(p);
     
     // Scroll automatique vers le bas
-    msgContainer.scrollTo({
-        top: msgContainer.scrollHeight,
-        behavior: 'smooth'
-    });
+    msgContainer.scrollTop = msgContainer.scrollHeight;
 }
 
-// Initialisation de l'année dans le footer et autres réglages
+// Initialisation de l'année dans le footer
 document.addEventListener('DOMContentLoaded', () => {
     const yearSpan = document.getElementById('year');
     if (yearSpan) {
