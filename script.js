@@ -122,7 +122,7 @@ function handleOption(type) {
         p.innerHTML = "🚨 <strong>Urgence :</strong> Appelez immédiatement le <strong>(514) 933-8411</strong>. Nous intervenons 24/7.";
     } else if (type === 'devis') {
         p.innerHTML = "📋 <strong>Devis :</strong> Un instant, nous vous redirigeons vers notre formulaire de soumission...";
-        setTimeout(() => window.location.href = "https://artleboss2222.github.io/booking.html", 1200);
+        setTimeout(() => window.location.href = "https://artleboss2222.github.io/devis.html", 1200);
     }
     
     msgContainer.appendChild(p);
